@@ -33,6 +33,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    {src :'~plugins/vue-apexcharts.js', ssr: false}
   ],
 
   /*
@@ -53,9 +54,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
+    vendor: ['vue-apexcharts', 'axios'],
     extend(config, ctx) {
       
     }
