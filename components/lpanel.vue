@@ -1,38 +1,34 @@
 <template>
 	<div class="lpanel">
-<<<<<<< HEAD
 		<div class="kvo" @click="cl"></div>
-		<div class="kvo" @click="chose=0">
+		<div class="kvo" @click="chose=0; $emit('chose', 0)">
 			<iconDesktop :clicked="chose"></iconDesktop>
 		</div>
-		<div class="kvo" @click="chose=1">
+		<div class="kvo" @click="chose=1; $emit('chose', 1)">
 			<iconLeads :clicked="chose"></iconLeads>
 		</div>
-		<div class="kvo" @click="chose=2">
+		<div class="kvo" @click="chose=2; $emit('chose', 2)">
 			<iconTasks :clicked="chose"></iconTasks>
 		</div>
-		<div class="kvo" @click="chose=3">
+		<div class="kvo" @click="chose=3; $emit('chose', 3)">
 			<iconList :clicked="chose"></iconList>
 		</div>
-		<div class="kvo" @click="chose=4">
+		<div class="kvo" @click="chose=4; $emit('chose', 4)">
 			<iconMail :clicked="chose"></iconMail>
 		</div>
-		<div class="kvo" @click="chose=5">
+		<div class="kvo" @click="chose=5; $emit('chose', 5)">
 			<iconAnalytics :clicked="chose"></iconAnalytics>
 		</div>
-		<div class="kvo" @click="chose=6">
+		<div class="kvo" @click="chose=6; $emit('chose', 6)">
 			<iconSettings :clicked="chose"></iconSettings>
 		</div>
 		<div class="kvo last">			
 			<iconChat></iconChat>
 		</div>
-=======
->>>>>>> f5dc5894d1def728700ff50390a8e677961311b9
 	</div>
 </template>
 
 <script>
-<<<<<<< HEAD
 import iconChat from '~/components/icons/chat.vue';
 import iconSettings from '~/components/icons/settings.vue';
 import iconAnalytics from '~/components/icons/analytics.vue';
@@ -63,17 +59,10 @@ export default {
 	components: {
 		iconChat, iconSettings, iconAnalytics, iconMail, iconList, iconTasks, iconLeads, iconDesktop
   	}
-=======
-
-export default {
-  components: {
   }
->>>>>>> f5dc5894d1def728700ff50390a8e677961311b9
-}
 </script>
 
 <style scoped>
-<<<<<<< HEAD
 
 	img {
 		height: 50%;
@@ -125,16 +114,5 @@ export default {
 
 	.clicked {
 		color: white;
-=======
-	.lpanel {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-		min-width: 65px;
-		width: 65px;
-		background-color: #1b3446;
-		position: fixed;
-
->>>>>>> f5dc5894d1def728700ff50390a8e677961311b9
 	}
 </style>

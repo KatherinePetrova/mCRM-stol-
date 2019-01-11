@@ -169,9 +169,8 @@ export default {
 <style scoped>
 /*header*/
 	.content{
-		margin-left: 65px;
 		height: 100vh;
-		width: calc(100% - 65px);
+		width: 100%;
 		background-color: #fff;
 		position: relative;
 	}
