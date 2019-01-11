@@ -1,15 +1,15 @@
 <template>
 	<div class="main">
-		<nuxt-link to="/" style="margin-top: 20px">Перейти</nuxt-link>
+		<lpanel></lpanel>
 	</div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import lpanel from '~/components/lpanel.vue'
 
 export default {
   components: {
-    Logo
+	lpanel
   }
 }
 </script>
@@ -19,8 +19,6 @@ export default {
 		display: flex;
 		min-height: 100vh;
 		min-width: 100vw;
-		justify-content: center;
-		align-items: center;
 		position: absolute;
 		flex-direction: column;
 	}
