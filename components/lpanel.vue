@@ -1,5 +1,6 @@
 <template>
 	<div class="lpanel">
+<<<<<<< HEAD
 		<div class="kvo" @click="cl"></div>
 		<div class="kvo" @click="chose=0">
 			<iconDesktop :clicked="chose"></iconDesktop>
@@ -25,10 +26,13 @@
 		<div class="kvo last">			
 			<iconChat></iconChat>
 		</div>
+=======
+>>>>>>> f5dc5894d1def728700ff50390a8e677961311b9
 	</div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import iconChat from '~/components/icons/chat.vue';
 import iconSettings from '~/components/icons/settings.vue';
 import iconAnalytics from '~/components/icons/analytics.vue';
@@ -59,10 +63,17 @@ export default {
 	components: {
 		iconChat, iconSettings, iconAnalytics, iconMail, iconList, iconTasks, iconLeads, iconDesktop
   	}
+=======
+
+export default {
+  components: {
+  }
+>>>>>>> f5dc5894d1def728700ff50390a8e677961311b9
 }
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 
 	img {
 		height: 50%;
@@ -114,5 +125,16 @@ export default {
 
 	.clicked {
 		color: white;
+=======
+	.lpanel {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		min-width: 65px;
+		width: 65px;
+		background-color: #1b3446;
+		position: fixed;
+
+>>>>>>> f5dc5894d1def728700ff50390a8e677961311b9
 	}
 </style>
