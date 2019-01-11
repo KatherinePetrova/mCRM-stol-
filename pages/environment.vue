@@ -1,15 +1,21 @@
 <template>
 	<div class="main">
-		<nuxt-link to="/" style="margin-top: 20px">Перейти</nuxt-link>
+		<lpanel></lpanel>
+		<!-- <tasks></tasks> -->
+		<lists></lists>
 	</div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import lpanel from '~/components/lpanel.vue'
+import tasks from '~/components/tasks.vue'
+import lists from '~/components/lists.vue'
 
 export default {
   components: {
-    Logo
+    lpanel,
+    tasks,
+    lists
   }
 }
 </script>
@@ -17,11 +23,19 @@ export default {
 <style scoped>
 	.main {
 		display: flex;
-		min-height: 100vh;
-		min-width: 100vw;
-		justify-content: center;
-		align-items: center;
-		position: absolute;
-		flex-direction: column;
+		height: 100vh;
+		min-width: 100%;
+		position: relative;
 	}
+
+/*	.content {
+		background-color: #f5f5f5;
+		padding: 15px;
+		position: absolute;
+		top: 65px;
+		left: 65px;
+		height: 100%;
+		width: 100%;
+	}*/
+
 </style>
