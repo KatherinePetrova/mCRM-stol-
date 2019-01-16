@@ -48,6 +48,98 @@
 			</div>
 		</div>
 
+		<div class="right_ponel">
+			
+			<div class="about">
+				<div class="head">
+					<div class="lead_name">
+						<input type="text" spellcheck=false placeholder="Сделка #XXXXXX">
+						<button class="dots">
+							<div class="dot"></div>
+							<div class="dot"></div>
+							<div class="dot"></div>
+						</button>
+					</div>
+					<label class="block_tags" for="new_tag">
+						<ul class="tags">
+							<li class="tag">#Тестирование</li>
+						</ul>
+						<input type="text" id="new_tag" spellcheck=false>
+					</label>
+					<div class="steps">
+						<span class="title">Отдел сервиса РК</span>
+						<label for="select_strip" class="name">Новая заявка</label>
+						<div class="strip">
+							<div class="strip_color yellow"></div>
+							<div class="strip_color none"></div>
+							<div class="strip_color none"></div>
+						</div>
+						<input type="text" id="select_strip" spellcheck=false>
+					</div>
+					<div class="settings">
+						<div class="section">
+							<span class="activ">Основное</span>
+							<span class="miss">Доп информация</span>
+							<span class="miss">Доставка</span>
+							<span class="miss">Счет РФ</span>
+							<span class="miss">Аналитика</span>
+						</div>
+						<button class="dots">
+							<div class="dot"></div>
+							<div class="dot"></div>
+							<div class="dot"></div>
+						</button>
+					</div>
+				</div>
+
+				<div class="body">
+					<div class="input">
+						<div class="child">
+							<span class="name">Отв-ный</span>
+						</div>
+						<div class="child">
+							<input class="text" type="text" value="Садокасов Данияр">
+						</div>
+					</div>
+					<div class="input">
+						<div class="child">
+							<span class="name">Источник</span>
+						</div>
+						<div class="child">
+								<div class="select">
+									<button>
+										<span>Выбран</span>
+										<div class="sqr"></div>
+									</button>
+									<div class="block_options">
+										<div class="option">Выбрать</div>
+										<div class="option">Выбрать</div>
+										<div class="option">Выбрать</div>
+									</div>
+								</div>
+						</div>
+					</div>
+					<div class="input">
+						<div class=" child">
+							<span class="name">Фото</span>
+						</div>
+						<div class="child">
+							<span class="doesn_t">Не трогать!</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="chat">
+				
+			</div>
+			
+			<div class="widget">
+				
+			</div>
+			
+		</div>
+
 		<div class="about_today">
 			
 		</div>
@@ -179,7 +271,7 @@
 </script>
 <style scoped>
 /*main*/
-	button, a{
+	button, a, input{
 		outline: none;
 		cursor: pointer;
 	}
@@ -316,6 +408,253 @@
 	.button__new_deal>svg{
 		width: 20px;
 		height: 25%;
+	}
+/*card*/
+	.dots{
+		background-color: transparent;
+		border: none;
+		display: flex;
+		flex-direction: row;
+	}
+	.dots>.dot{
+		background-color: #fff;
+		height: 3px;
+		width: 3px;
+		margin: 0 1px;
+		border-radius: 50%;
+	}
+	.content>.right_ponel{
+		width: 95vw;
+		height: 100%;
+		top: 0;
+		z-index: 10;
+		background-color: #fed;
+		position: absolute;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.right_ponel>.about, .right_ponel>.chat, .right_ponel>.widget{
+		width: 47.5%;
+		display: flex;
+		height: 100%
+	}
+	.right_ponel>.about{
+		background-color: #fff;
+		display: flex;
+		flex-direction: column;
+	}
+	/*r-head*/
+		.right_ponel>.about>.head{
+			display: flex;
+			flex-direction: column;
+			padding: 1em 1.5em 0;
+			justify-content: space-between;
+		}
+		.right_ponel>.about>.head>.lead_name{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			padding-bottom: 0.5em;
+		}
+		.right_ponel>.about>.head input{
+			background-color: transparent;
+			border: none;
+			width: calc(100% - 27px);
+			font-size: 1.25em;
+			color: #fff;
+			outline: none;
+		}
+		.right_ponel>.about>.head input:focus{
+			border-bottom: 1px solid #4c8bf7;
+		}
+		.right_ponel>.about>.head>.block_tags{
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			cursor: pointer;
+		}
+		.right_ponel>.about>.head>.block_tags>input{
+			width: 100%;
+		}
+		.right_ponel>.about>.head>.block_tags>.tags{
+			display: flex;
+			flex-wrap: wrap;
+			width: 100%;
+			color: #fff;
+			padding: 0;
+			flex-direction: row;
+		}
+		.right_ponel>.about>.head>.block_tags>.tags>.tag{
+			list-style-type: none;
+			background-color: rgba(56,82,93,0.5);
+			padding: 0 7px;
+			height: 21px;
+			display: flex;
+			align-items: center;
+			border: 1px solid #38525d;
+			white-space: nowrap;
+		}
+		.right_ponel>.about>.head>.steps{
+			display: flex;
+			flex-direction: column;
+			font-size: 0.9em;
+		}
+		.right_ponel>.about>.head>.steps>.title{
+			color: #617480;
+		}
+		.right_ponel>.about>.head>.steps>.name{
+			color: #fff;
+			cursor: pointer;
+		}
+		.right_ponel>.about>.head>.steps>.strip{
+			width: 100%;
+			height: 2px;
+			background-color: #00000059;
+		}
+		.right_ponel>.about>.head>.steps>.strip>.strip_color{
+			width: 33.33%;
+			height: 100%;
+		}
+		.right_ponel>.about>.head>.settings{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			bottom: 0;
+			width: 100%;
+		}
+		.right_ponel>.about>.head>.settings>.section{
+			color: #62757d;
+			display: flex;
+			width: 100%;
+		}
+		.right_ponel>.about>.head>.settings>.section>.activ{
+			color: #fff;
+			border-bottom: 3px solid #fff;
+		}
+		.right_ponel>.about>.head>.settings>.section>span{
+			width: 75px;
+			margin: 0 0.2em;
+			align-items: center;
+			white-space: nowrap;
+			display: flex;
+			flex-wrap: nowrap;
+			overflow: hidden;
+			cursor: pointer;
+		}
+
+	/*r-body*/
+		.right_ponel>.about>.body{
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			padding: 1em 1.5em 0;
+			color: #848c90;
+			font-size: 1.1em;
+		}
+		.right_ponel>.about>.body>.input{
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			padding: 5px 0;
+		}
+		.right_ponel>.about>.body>.input>.child{
+			width: 50%;
+			display: flex;
+			justify-content: flex-start;
+		}
+		.right_ponel>.about>.body>.input>.child>.text{
+			border: none;
+			background-color: transparent;
+		}
+		.right_ponel>.about>.body>.input>.child>.text:focus{
+			border-bottom: 1px solid #4c8bf7;
+		}
+		.right_ponel>.about>.body>.input>.child>.doesn_t{
+			color: #000;
+		}
+		.right_ponel>.about>.body>.input>.child>.select{
+			position: relative;
+			width: 100%;
+		}
+		.right_ponel>.about>.body>.input>.child>.select>button{
+			border: none;
+			background-color: transparent;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			width: 100%;
+		}
+		.right_ponel>.about>.body>.input>.child>.select>button:focus{
+			border-bottom: 1px solid #4c8bf7;
+		}
+		.right_ponel>.about>.body>.input>.child>.select>button>.sqr{
+			right: -3.5px;
+			margin: -1px 4px 0;
+			height: 6px;
+			width: 6px;
+			border: 0px;
+			border-bottom: 1px;
+			border-right: 1px;
+			border-style: solid;
+			border-color: #000;
+			transform: rotate(45deg);
+		}
+		.right_ponel>.about>.body>.input>.child>.select>.block_options{
+			position: absolute;
+			border: 1px solid #848c90;
+			/*width: 100%;*/
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: #fff;
+			/*opacity: 0;*/
+		}
+		.right_ponel>.about>.body>.input>.child>.select>.block_options>.option{
+			border-bottom: 1px solid #848c90;
+			width: 100%;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			text-align: center;
+		}
+
+
+
+/*
+								<div class="select">
+									<span>Выбран</span>
+									<div class="sqr"></div>
+									<div class="block_otions">
+										<div class="option">Выбрать</div>
+										<div class="option">Выбрать</div>
+										<div class="option">Выбрать</div>
+									</div>
+								</div>*/
+
+
+
+
+
+
+
+
+
+
+
+
+	.right_ponel>.chat{
+		background-color: #fee;
+	}
+	.right_ponel>.widget{
+		width: 5%;
+		background-color: #ddf;
+	}
+	.right_ponel>.about>.head{
+		width: 100%;
+		display: flex;
+		background-color: #263d4c;
+		height: 12em;
 	}
 /*body*/
 	.content>.body{

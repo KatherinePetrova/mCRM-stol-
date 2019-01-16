@@ -37,7 +37,7 @@ export default {
 	.main {
 		background-color: #000;
 		display: flex;
-		min-width: 100%;
+		width: 100vw;
 		position: relative;
 		min-height: 100vh;
 		position: absolute;
