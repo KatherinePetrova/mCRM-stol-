@@ -15,7 +15,7 @@
 					<div class="third_block block"></div>
 				</div> -->
 			</div>
-
+<!-- 
 			<div class="about r-border child dwm">
 				<div>
 					<span>День</span>
@@ -26,7 +26,7 @@
 				<div>
 					<span>Месяц</span>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="search r-border child">
 				<svg class="list-top-search__icon svg-icon svg-common--filter-search-dims">
@@ -34,10 +34,9 @@
 						<svg viewBox="0 0 16 15" id="common--filter-search" width="100%" height="100%"><path id="chSearch" class="chcls-1" d="M6.493 12.994a6.5 6.5 0 1 1 6.5-6.5 6.5 6.5 0 0 1-6.5 6.5zm0-11.007a4.506 4.506 0 1 0 4.5 4.506 4.5 4.5 0 0 0-4.5-4.506zM16.01 14.11l-.894.9-3.108-2.632 1.38-1.388z"></path></svg>		
 					</use>
 				</svg>
-				<input type="text" placeholder="Фильтр" class="input">
+				<input type="text" placeholder="Поиск и фильтр" class="input">
 				<span class="deals">
-					<span class="count">559 сделок: </span>
-					<span class="value">504 196 400 тг</span>
+					<span class="count">17216 контактов</span>
 				</span>
 			</div>
 
@@ -46,15 +45,14 @@
 					<use xlink:href="#controls--button-more">
 						<svg viewBox="0 0 13 3" id="controls--button-more" width="100%" height="100%"><path id="dymore" class="dycls-1" d="M1.5 0A1.5 1.5 0 1 1 0 1.5 1.5 1.5 0 0 1 1.5 0zm5 0A1.5 1.5 0 1 1 5 1.5 1.5 1.5 0 0 1 6.5 0zm5 0A1.5 1.5 0 1 1 10 1.5 1.5 1.5 0 0 1 11.5 0z"></path></svg>		
 					</use>
-				</svg>
-				<button class="button__setings">Настроить</button>		
+				</svg>		
 				<button class="button__new_deal">
 					<svg class="svg-icon svg-controls--button-add-dims">
 						<use xlink:href="#controls--button-add">
 							<svg viewBox="0 0 9 9" id="controls--button-add" width="100%" height="100%"><path id="dv_" data-name="+" class="dvcls-1" d="M9 5H5v4H4V5H0V4h4V0h1v4h4v1z"></path></svg>		
 						</use>
 					</svg>
-					Новая сделка
+					Добавить контакт
 				</button>
 			</div>
 		</div>
@@ -62,94 +60,65 @@
 			<table>
 				<thead>
 					<tr style="border-top: none;">
-						<th><input type="checkbox">Дата исполнения / Отв.</th>
-						<th>Контакт или сделка</th>
-						<th style="border-right: none">Текст задачи</th>
+						<th style="color: #6e747a"><input type="checkbox">Наименование<div class="arrow"><img src="/arrow.png" alt=""></div></th>
+						<th style="border-right: none">Компания</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="groupName">
-						<td>Просроченные задачи</td>
+					<tr class="task">
+						<td>
+							<div><input type="checkbox"></div>
+							<div class="info">
+								<span>"EURASIAN CONSTRUCTION"</span>
+							</div>
+							<div class="point"><span>&bull;</span></div>
+						</td>
+						<td>
+							<div class="info">
+								<span>TOO "EURASIAN CONSTRUCTION"</span>
+							</div>
+						</td>
 					</tr>
 					<tr class="task">
 						<td>
 							<div><input type="checkbox"></div>
 							<div class="info">
-								<span>04.01.2019 23:59</span>
-								<span>Садвокасов Данияр</span>
+								<span>"EURASIAN CONSTRUCTION"</span>
 							</div>
+							<div class="point"><span>&bull;</span></div>
 						</td>
 						<td>
 							<div class="info">
-								<span>Lite buy</span>
-								<span>Lite buy, Lite buy</span>
+								<span>TOO "EURASIAN CONSTRUCTION"</span>
 							</div>
 						</td>
-						<td>
-							<span class="info">Связаться с клиентом</span>
-						</td>
-					</tr>
-					<tr class="groupName">
-						<td>Задачи на сегодня</td>
 					</tr>
 					<tr class="task">
 						<td>
 							<div><input type="checkbox"></div>
 							<div class="info">
-								<span>04.01.2019 23:59</span>
-								<span>Садвокасов Данияр</span>
+								<span>"EURASIAN CONSTRUCTION"</span>
 							</div>
+							<div class="point"><span>&bull;</span></div>
 						</td>
 						<td>
 							<div class="info">
-								<span>Lite buy</span>
-								<span>Lite buy, Lite buy</span>
+								<span>TOO "EURASIAN CONSTRUCTION"</span>
 							</div>
 						</td>
-						<td>
-							<span class="info">Связаться с клиентом</span>
-						</td>
-					</tr>
-					<tr class="groupName">
-						<td>Задачи на завтра</td>
 					</tr>
 					<tr class="task">
 						<td>
-							<input type="checkbox">
+							<div><input type="checkbox"></div>
 							<div class="info">
-								<span>04.01.2019 23:59</span>
-								<span>Садвокасов Данияр</span>
+								<span>"EURASIAN CONSTRUCTION"</span>
 							</div>
-						</td>
-						<td>
-							<div class="info">
-								<span>Lite buy</span>
-								<span>Lite buy, Lite buy</span>
-							</div>
-						</td>
-						<td>
-							<span class="info">Связаться с клиентом</span>
-						</td>
-					</tr>
-					<tr class="groupName">
-						<td>Будущие задачи</td>
-					</tr>
-					<tr class="task">
-						<td>
-							<input type="checkbox">
-							<div class="info">
-								<span>04.01.2019 23:59</span>
-								<span>Садвокасов Данияр</span>
-							</div>
+							<div class="point"><span>&bull;</span></div>
 						</td>
 						<td>
 							<div class="info">
-								<span>Lite buy</span>
-								<span>Lite buy, Lite buy</span>
+								<span>TOO "EURASIAN CONSTRUCTION"</span>
 							</div>
-						</td>
-						<td>
-							<span class="info">Связаться с клиентом</span>
 						</td>
 					</tr>
 				</tbody>
@@ -249,7 +218,7 @@ export default {
 		border: none;
 		outline: none;
 		font-size: 100%;
-		width: 5px;
+		width: 700px;
 	}
 	.search>.input::placeholder{
 		color: rgba(0,0,0,0.33);
@@ -328,12 +297,13 @@ export default {
 	}
 
 	th {
-		width: 33%;
+		width: 50%;
 		border-right: #e5e5e5 solid 1px;
 		border-bottom: #e5e5e5 solid 1px;
 		font-size: 13px;
 		text-align: left;
 		padding-left: 10px;
+		position: relative;
 	}
 
 	tr {
@@ -344,6 +314,7 @@ export default {
 
 	td {
 		padding: 10px;
+		position: relative;
 	}
 
 	td:first-child,th:first-child {
@@ -354,11 +325,11 @@ export default {
 		position: absolute;
 		height: 20px;
 		transform: scale(1.7);	
-		left: 30px;
+		left: 15px;
 	}
 
 	td input {
-		height: 40px;
+		height: 25px;
 	}
 
 	.groupTask{
@@ -379,12 +350,34 @@ export default {
 	}
 
 	.task {
-		height: 65px;
+		height: 40px;
 	}
 
 	.info {
 		display: flex;
 		flex-direction: column;
 		color: #7a7f85
+	}
+
+	.point {
+		color: #b1b1b1;
+		position: absolute;
+		right: 10px;
+		top: 3px;
+		font-size: 25px;
+		cursor: pointer;
+	}
+
+	.arrow {
+		position: absolute;
+		top: 15px;
+		right: 13px;
+		cursor: pointer;
+		transform: rotate(270deg);
+	}
+	.arrow img {
+
+		height: 8px;
+		width: 5px;
 	}
 </style>

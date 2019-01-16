@@ -1,6 +1,5 @@
 <template>
-	<div class="main">
-		<lpanel @chose="chose"></lpanel>
+	<div class="main">		<lpanel @chose="chose"></lpanel>
 		<lists v-if="selecty==3"></lists>
 		<tasks v-if="selecty==2"></tasks>
 		<leads v-if="selecty==1"></leads>

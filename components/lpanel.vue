@@ -70,7 +70,7 @@ export default {
 
 	.lpanel {
 		min-height: 100vh;
-		min-width: 60px;
+		min-width: 65px;
 		width: 5vw;
 		background-color: #1b3446;
 		display: flex;
@@ -78,7 +78,7 @@ export default {
 	}
 
 	.kvo {
-		min-width: 60px;
+		min-width: 65px;
 		width: 5vw;
 		min-height: 60px;
 		height: 5vw;
