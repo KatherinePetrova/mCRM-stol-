@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
 		<logo></logo>
-		<nuxt-link to="/environment" style="margin-top: 20px">Перейти</nuxt-link>
+		<nuxt-link to="/leads" style="margin-top: 20px">Перейти</nuxt-link>
 	</div>
 </template>
 

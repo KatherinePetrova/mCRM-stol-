@@ -168,9 +168,10 @@ export default {
 /*header*/
 	.content{
 		height: 100vh;
-		width: 100%;
+		width: calc(100% - 70px);
 		background-color: #fff;
-		position: relative;
+		position: absolute;
+		left: 70px;
 	}
 	.header{
 		height: 64px;

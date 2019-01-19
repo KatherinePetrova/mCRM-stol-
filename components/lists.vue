@@ -139,9 +139,11 @@ export default {
 /*header*/
 	.content{
 		height: 100vh;
-		width: 100%;
+		width: calc(100%-70px);
+		left: 70px;
 		background-color: #fff;
-		position: relative;
+		position: absolute;
+
 	}
 	.header{
 		height: 64px;

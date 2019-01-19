@@ -1,27 +1,27 @@
 <template>
 	<div class="lpanel">
-		<div class="kvo" @click="cl"></div>
-		<div class="kvo" @click="chose=0; $emit('chose', 0)">
+		<div class="kvo"></div>
+		<nuxt-link class="kvo" to="/leads">
 			<iconDesktop :clicked="chose"></iconDesktop>
-		</div>
-		<div class="kvo" @click="chose=1; $emit('chose', 1)">
+		</nuxt-link>
+		<nuxt-link class="kvo" to="/leads">
 			<iconLeads :clicked="chose"></iconLeads>
-		</div>
-		<div class="kvo" @click="chose=2; $emit('chose', 2)">
+		</nuxt-link>
+		<nuxt-link class="kvo" to="/tasks">
 			<iconTasks :clicked="chose"></iconTasks>
-		</div>
-		<div class="kvo" @click="chose=3; $emit('chose', 3)">
+		</nuxt-link>
+		<nuxt-link class="kvo" to="/lists">
 			<iconList :clicked="chose"></iconList>
-		</div>
-		<div class="kvo" @click="chose=4; $emit('chose', 4)">
+		</nuxt-link>
+		<nuxt-link class="kvo" to="/leads">
 			<iconMail :clicked="chose"></iconMail>
-		</div>
-		<div class="kvo" @click="chose=5; $emit('chose', 5)">
+		</nuxt-link>
+		<nuxt-link class="kvo" to="/leads">
 			<iconAnalytics :clicked="chose"></iconAnalytics>
-		</div>
-		<div class="kvo" @click="chose=6; $emit('chose', 6)">
+		</nuxt-link>
+		<nuxt-link class="kvo" to="/leads">
 			<iconSettings :clicked="chose"></iconSettings>
-		</div>
+		</nuxt-link>
 		<div class="kvo last">			
 			<iconChat></iconChat>
 		</div>
@@ -39,21 +39,13 @@ import iconLeads from '~/components/icons/leads.vue';
 import iconDesktop from '~/components/icons/desktop.vue';
 
 export default {
-	data(){
-		return {
-			chose: 0
-		}
-	},
+	props: ['chose'],
 	methods: {
 		iconChose(ind){
 			for(var i=0; i<this.chose.length; i++){
 				this.chose[i] = false;
 			}
 			this.chose[ind] = true;
-			console.log(this.chose)
-		},
-		cl(){
-			console.log(this.chose)
 		}
 	},
 	components: {
@@ -70,16 +62,19 @@ export default {
 
 	.lpanel {
 		min-height: 100vh;
-		min-width: 65px;
-		width: 5vw;
+		min-width: 70px;
+		width: 70px;
 		background-color: #1b3446;
 		display: flex;
 		flex-direction: column;
+		position: fixed;
+		top: 0;
+		left: 0;
 	}
 
 	.kvo {
-		min-width: 65px;
-		width: 5vw;
+		min-width: 70px;
+		width: 100%;
 		min-height: 60px;
 		height: 5vw;
 
@@ -93,6 +88,7 @@ export default {
 		text-align: center;
 		font-size: 0.65em;
 		color: #AFAFAF;
+		text-decoration: none;
 
 		position: relative;
 	}

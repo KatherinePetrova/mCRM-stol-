@@ -37,7 +37,7 @@
 					</use>
 				</svg>
 				<button class="button__setings">Настроить</button>		
-				<button class="button__new_deal">
+				<button class="button__new_deal" @click='nony=true'>
 					<svg class="svg-icon svg-controls--button-add-dims">
 						<use xlink:href="#controls--button-add">
 							<svg viewBox="0 0 9 9" id="controls--button-add" width="100%" height="100%"><path id="dv_" data-name="+" class="dvcls-1" d="M9 5H5v4H4V5H0V4h4V0h1v4h4v1z"></path></svg>		
@@ -48,7 +48,7 @@
 			</div>
 		</div>
 
-		<div class="right_ponel">
+		<div class="right_ponel" v-if="nony">
 			
 			<div class="about">
 				<div class="head">
@@ -77,12 +77,8 @@
 						<input type="text" id="select_strip" spellcheck=false>
 					</div>
 					<div class="settings">
-						<div class="section">
-							<span class="activ">Основное</span>
-							<span class="miss">Доп информация</span>
-							<span class="miss">Доставка</span>
-							<span class="miss">Счет РФ</span>
-							<span class="miss">Аналитика</span>
+						<div class="section" style="font-size: 0.9em">
+							<span v-for="item, index in vklads" :class="{active: selected_vklad==index}" @click="selected_vklad=index">{{item.name}}</span>
 						</div>
 						<button class="dots">
 							<div class="dot"></div>
@@ -93,38 +89,38 @@
 				</div>
 
 				<div class="body">
-					<div class="input">
+					<div class="input" v-for="item in vklads[selected_vklad].stroks">
 						<div class="child">
-							<span class="name">Отв-ный</span>
+							<span class="name">{{item.name}}</span>
 						</div>
 						<div class="child">
-							<input class="text" type="text" value="Садокасов Данияр">
-						</div>
-					</div>
-					<div class="input">
-						<div class="child">
-							<span class="name">Источник</span>
-						</div>
-						<div class="child">
-								<div class="select">
-									<button>
-										<span>Выбран</span>
-										<div class="sqr"></div>
-									</button>
-									<div class="block_options">
-										<div class="option">Выбрать</div>
-										<div class="option">Выбрать</div>
-										<div class="option">Выбрать</div>
-									</div>
-								</div>
+							<input class="text" type="text" :value="item.value">
 						</div>
 					</div>
-					<div class="input">
-						<div class=" child">
-							<span class="name">Фото</span>
+					<div class="child" style="border-bottom: 1px solid #62757d; margin: 15px 0" v-if="selected_vklad==0"></div>
+					<div class="contact" v-if="selected_vklad==0">
+						<div class="img"></div>
+						<input type="text" value="Нуруллаев Мансур">
+						<button class="dots">
+							<div class="dot"></div>
+							<div class="dot"></div>
+							<div class="dot"></div>
+						</button>
+					</div>
+					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
+						<div class="child">
+							<span class="name">{{item.name}}</span>
 						</div>
 						<div class="child">
-							<span class="doesn_t">Не трогать!</span>
+							<input class="text" type="text" :value="item.value">
+						</div>
+					</div>
+					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
+						<div class="child">
+							<span class="name">{{item.name}}</span>
+						</div>
+						<div class="child">
+							<input class="text" type="text" :value="item.value">
 						</div>
 					</div>
 				</div>
@@ -191,7 +187,71 @@
   	components: { Container, Draggable },
   	data(){
   		return{
+  			nony: false,
   			select_task: '',
+  			selected_vklad: 0,
+  			vklads: [
+  				{
+  					name: 'Основное',
+  					stroks: [
+  						{
+  							name: 'Ответственный',
+  							value: 'Садвокасов Данияр'
+  						},
+  						{
+  							name: 'Бюджет',
+  							value: '5000'
+  						},
+  						{
+  							name: 'Курс рубля в счете на оплату',
+  							value: '5.7'
+  						},
+  						{
+  							name: '№ счета РК',
+  							value: '548944123'
+  						},
+  						{
+  							name: 'Процент',
+  							value: '7'
+  						},
+  						{
+  							name: 'Создатель сделки',
+  							value: 'Садвокасов Данияр'
+  						}
+  					]
+
+  				},
+  				{
+  					name: 'Доп. информация',
+  					stroks: [
+  						{
+  							name: 'кек',
+  							value: 'Садвокасов Данияр'
+  						},
+  						{
+  							name: 'хуек',
+  							value: '5000'
+  						},
+  						{
+  							name: 'Курс рубля в счете на оплату',
+  							value: '5.7'
+  						},
+  						{
+  							name: '№ счета РК',
+  							value: '548944123'
+  						},
+  						{
+  							name: 'Процент',
+  							value: '7'
+  						},
+  						{
+  							name: 'Создатель сделки',
+  							value: 'Садвокасов Данияр'
+  						}
+  					]
+
+  				}
+  			],
   			groups:[
   			{
   				name: 'Неразобранное',
@@ -255,21 +315,52 @@
   			],
   		}
   	},
-	  methods: {
-	    onDrop(dropResult, e){
-	      if(e.removedIndex !== null) this.groups[dropResult].tasks.splice(e.removedIndex, 1)
-	      if(e.addedIndex !== null) this.groups[dropResult].tasks.splice(e.addedIndex, 0, e.payload)
-	      
-	    },
-      getCardPayload (columnId) {
-	      return index => {
-	        return this.groups.filter(p => p.id === columnId)[0].tasks[index];
-	      }
-	    },
-		}
+  	methods: {
+  		onDrop(dropResult, e){
+  			if(e.removedIndex !== null) this.groups[dropResult].tasks.splice(e.removedIndex, 1)
+  				if(e.addedIndex !== null) this.groups[dropResult].tasks.splice(e.addedIndex, 0, e.payload)
+
+  			},
+  		getCardPayload (columnId) {
+  			return index => {
+  				return this.groups.filter(p => p.id === columnId)[0].tasks[index];
+  			}
+  		},
+  		widthInput(element){
+  			var len = element.target.value.split('').length;
+  			element.target.style.width = len * 5 * (1 + len/50) + 20 + 'px'
+  		},
+  		focusOut(element){
+  			if(element.target.value!=''){
+  				element.target.placeholder = element.target.value;
+	  			var width = element.target.style.width;
+	  			element.target.value = '';
+	  			element.target.style.width = width;
+  			}
+  		}
+  	}
   }
 </script>
 <style scoped>
+::-webkit-scrollbar {
+	width: 10px;
+}
+::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+	background: #888; 
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #555; 
+}
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 /*main*/
 	button, a, input{
 		outline: none;
@@ -290,7 +381,9 @@
 /*header*/
 	.content{
 		height: 100vh;
-		width: 100%;
+		width: calc(100% - 70px);
+		position: absolute;
+		left: 70px;
 		background-color: #fff;
 	}
 	.header{
@@ -443,13 +536,15 @@
 		background-color: #fff;
 		display: flex;
 		flex-direction: column;
+		position: relative;
 	}
 	/*r-head*/
 		.right_ponel>.about>.head{
 			display: flex;
-			flex-direction: column;
 			padding: 1em 1.5em 0;
-			justify-content: space-between;
+			min-height: 11em;
+			max-height: 11em;
+			flex-direction: column;
 		}
 		.right_ponel>.about>.head>.lead_name{
 			display: flex;
@@ -528,29 +623,29 @@
 			display: flex;
 			width: 100%;
 		}
-		.right_ponel>.about>.head>.settings>.section>.activ{
+		.right_ponel>.about>.head>.settings>.section>.active{
 			color: #fff;
-			border-bottom: 3px solid #fff;
+			border-bottom: 2.5px solid #fff;
+			padding-bottom: 0;
 		}
 		.right_ponel>.about>.head>.settings>.section>span{
-			width: 75px;
-			margin: 0 0.2em;
-			align-items: center;
-			white-space: nowrap;
-			display: flex;
-			flex-wrap: nowrap;
-			overflow: hidden;
-			cursor: pointer;
+			width: 100%;
+	    	min-width: 75px;
+	    	overflow: hidden;
+	    	cursor: pointer;
+	    	padding: 5px 2px;
+	    	text-align: center;
+	    	word-wrap: break-word;
+	    	white-space: nowrap;
 		}
 
 	/*r-body*/
 		.right_ponel>.about>.body{
-			width: 100%;
-			display: flex;
-			flex-direction: column;
 			padding: 1em 1.5em 0;
 			color: #848c90;
-			font-size: 1.1em;
+			font-size: 1em;
+			overflow-y: auto;
+			padding-bottom: 100px;
 		}
 		.right_ponel>.about>.body>.input{
 			width: 100%;
@@ -618,7 +713,38 @@
 			justify-content: center;
 			text-align: center;
 		}
+		.right_ponel>.about>.body>.contact{
+			display: flex;
+			width: 100%;
+			position: relative;
+			align-items: center;
+		}
+		.right_ponel>.about>.body>.contact input{
+			background-color: transparent;
+			border: none;
+			width: calc(70% - 60px);
+			font-size: 1.25em;
+			font-weight: 600;
+			outline: none;
+			position: absolute;
+			left: 60px;
+		}
+		.right_ponel>.about>.body>.contact input:focus{
+			border-bottom: 1px solid #4c8bf7;
+		}
+		.right_ponel>.about>.body>.contact>.img{
+			display: flex;
+			height: 50px;
+			width: 50px;
+			background-image: url('/avatar.jpg');
+			background-size: cover;
+			background-position: center;
 
+			border-radius: 50%;
+
+			margin-right: 10px;
+
+		}
 
 
 /*
