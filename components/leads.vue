@@ -37,104 +37,18 @@
 					</use>
 				</svg>
 				<button class="button__setings">Настроить</button>		
-				<button class="button__new_deal" @click='nony=true'>
+				<nuxt-link class="button__new_deal" to="/leads/single">
 					<svg class="svg-icon svg-controls--button-add-dims">
 						<use xlink:href="#controls--button-add">
 							<svg viewBox="0 0 9 9" id="controls--button-add" width="100%" height="100%"><path id="dv_" data-name="+" class="dvcls-1" d="M9 5H5v4H4V5H0V4h4V0h1v4h4v1z"></path></svg>		
 						</use>
 					</svg>
 					Новая сделка
-				</button>
+				</nuxt-link>
 			</div>
 		</div>
 
-		<div class="right_ponel" v-if="nony">
-			
-			<div class="about">
-				<div class="head">
-					<div class="lead_name">
-						<input type="text" spellcheck=false placeholder="Сделка #XXXXXX">
-						<button class="dots">
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-						</button>
-					</div>
-					<label class="block_tags" for="new_tag">
-						<ul class="tags">
-							<li class="tag">#Тестирование</li>
-						</ul>
-						<input type="text" id="new_tag" spellcheck=false>
-					</label>
-					<div class="steps">
-						<span class="title">Отдел сервиса РК</span>
-						<label for="select_strip" class="name">Новая заявка</label>
-						<div class="strip">
-							<div class="strip_color yellow"></div>
-							<div class="strip_color none"></div>
-							<div class="strip_color none"></div>
-						</div>
-						<input type="text" id="select_strip" spellcheck=false>
-					</div>
-					<div class="settings">
-						<div class="section" style="font-size: 0.9em">
-							<span v-for="item, index in vklads" :class="{active: selected_vklad==index}" @click="selected_vklad=index">{{item.name}}</span>
-						</div>
-						<button class="dots">
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-						</button>
-					</div>
-				</div>
-
-				<div class="body">
-					<div class="input" v-for="item in vklads[selected_vklad].stroks">
-						<div class="child">
-							<span class="name">{{item.name}}</span>
-						</div>
-						<div class="child">
-							<input class="text" type="text" :value="item.value">
-						</div>
-					</div>
-					<div class="child" style="border-bottom: 1px solid #62757d; margin: 15px 0" v-if="selected_vklad==0"></div>
-					<div class="contact" v-if="selected_vklad==0">
-						<div class="img"></div>
-						<input type="text" value="Нуруллаев Мансур">
-						<button class="dots">
-							<div class="dot"></div>
-							<div class="dot"></div>
-							<div class="dot"></div>
-						</button>
-					</div>
-					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
-						<div class="child">
-							<span class="name">{{item.name}}</span>
-						</div>
-						<div class="child">
-							<input class="text" type="text" :value="item.value">
-						</div>
-					</div>
-					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
-						<div class="child">
-							<span class="name">{{item.name}}</span>
-						</div>
-						<div class="child">
-							<input class="text" type="text" :value="item.value">
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="chat">
-				
-			</div>
-			
-			<div class="widget">
-				
-			</div>
-			
-		</div>
+		
 
 		<div class="about_today">
 			
@@ -160,7 +74,7 @@
 							<span class="date">{{task.date}}</span>
 						</div>
 						<div class="body">
-							<div class="deal_name">{{task.deal}}</div>
+							<nuxt-link to="/leads/single/0" class="deal_name">{{task.deal}}</nuxt-link>
 						</div>
 						<div class="foot">
 							<div class="foot-child">
@@ -187,71 +101,7 @@
   	components: { Container, Draggable },
   	data(){
   		return{
-  			nony: false,
-  			select_task: '',
-  			selected_vklad: 0,
-  			vklads: [
-  				{
-  					name: 'Основное',
-  					stroks: [
-  						{
-  							name: 'Ответственный',
-  							value: 'Садвокасов Данияр'
-  						},
-  						{
-  							name: 'Бюджет',
-  							value: '5000'
-  						},
-  						{
-  							name: 'Курс рубля в счете на оплату',
-  							value: '5.7'
-  						},
-  						{
-  							name: '№ счета РК',
-  							value: '548944123'
-  						},
-  						{
-  							name: 'Процент',
-  							value: '7'
-  						},
-  						{
-  							name: 'Создатель сделки',
-  							value: 'Садвокасов Данияр'
-  						}
-  					]
-
-  				},
-  				{
-  					name: 'Доп. информация',
-  					stroks: [
-  						{
-  							name: 'кек',
-  							value: 'Садвокасов Данияр'
-  						},
-  						{
-  							name: 'хуек',
-  							value: '5000'
-  						},
-  						{
-  							name: 'Курс рубля в счете на оплату',
-  							value: '5.7'
-  						},
-  						{
-  							name: '№ счета РК',
-  							value: '548944123'
-  						},
-  						{
-  							name: 'Процент',
-  							value: '7'
-  						},
-  						{
-  							name: 'Создатель сделки',
-  							value: 'Садвокасов Данияр'
-  						}
-  					]
-
-  				}
-  			],
+  			
   			groups:[
   			{
   				name: 'Неразобранное',
@@ -329,14 +179,6 @@
   		widthInput(element){
   			var len = element.target.value.split('').length;
   			element.target.style.width = len * 5 * (1 + len/50) + 20 + 'px'
-  		},
-  		focusOut(element){
-  			if(element.target.value!=''){
-  				element.target.placeholder = element.target.value;
-	  			var width = element.target.style.width;
-	  			element.target.value = '';
-	  			element.target.style.width = width;
-  			}
   		}
   	}
   }
@@ -361,7 +203,8 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
-/*main*/
+
+
 	button, a, input{
 		outline: none;
 		cursor: pointer;
@@ -378,7 +221,6 @@ input[type=number]::-webkit-outer-spin-button {
 	.yellow{
 		background-color: #e4b248;	
 	}
-/*header*/
 	.content{
 		height: 100vh;
 		width: calc(100% - 70px);
@@ -487,6 +329,7 @@ input[type=number]::-webkit-outer-spin-button {
 		font-weight: 700;
 		padding: 0 0.5em;
 	}
+	
 	.button__setings{
 		border: 1px solid #dbdedf;
 		color: #313942;
@@ -497,6 +340,23 @@ input[type=number]::-webkit-outer-spin-button {
 		background-color: #4c8bf7;
 		color: #f5f5f5;
 		fill: #f5f5f5;
+
+		margin: 0 0.5em;
+		border-radius: 3px;
+		white-space: nowrap;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: calc(100% + 1.5em);
+		margin-top: -0.75em;
+		text-transform: uppercase;
+		font-weight: 700;
+		padding: 0 0.5em;
+
+		font-size: 0.75em;
+
+		text-decoration: none;
+
 	}
 	.button__new_deal>svg{
 		width: 20px;

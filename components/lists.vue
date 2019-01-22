@@ -131,6 +131,13 @@
 
 export default {
   components: {
+  },
+  data(){
+	  return {
+		  dfld: [
+			  
+		  ]
+	  }
   }
 }
 </script>

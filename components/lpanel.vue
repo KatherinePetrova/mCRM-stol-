@@ -1,7 +1,7 @@
 <template>
 	<div class="lpanel">
 		<div class="kvo" @click="cl"><img src="/mans.jpg" alt=""></div>
-		<nuxt-link class="kvo" to="/leads">
+		<nuxt-link class="kvo" to="/desktop">
 			<iconDesktop :clicked="chose"></iconDesktop>
 		</nuxt-link>
 		<nuxt-link class="kvo" to="/leads">
@@ -13,13 +13,13 @@
 		<nuxt-link class="kvo" to="/lists">
 			<iconList :clicked="chose"></iconList>
 		</nuxt-link>
-		<nuxt-link class="kvo" to="/leads">
+		<nuxt-link class="kvo" to="/mail">
 			<iconMail :clicked="chose"></iconMail>
 		</nuxt-link>
-		<nuxt-link class="kvo" to="/leads">
+		<nuxt-link class="kvo" to="/analytics">
 			<iconAnalytics :clicked="chose"></iconAnalytics>
 		</nuxt-link>
-		<nuxt-link class="kvo" to="/leads">
+		<nuxt-link class="kvo" to="/settings">
 			<iconSettings :clicked="chose"></iconSettings>
 		</nuxt-link>
 		<div class="kvo last">			
