@@ -142,6 +142,10 @@ export default {
 		width: 100%;
 		background-color: #f5f5f5;
 		position: relative;
+		width: calc(100%-70px);
+		left: 70px;
+		background-color: #fff;
+		position: absolute;
 	}
 	.header{
 		height: 64px;
