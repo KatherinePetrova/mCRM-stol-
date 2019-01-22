@@ -1,6 +1,6 @@
 <template>
 	<div class="lpanel">
-		<div class="kvo" @click="cl"></div>
+		<div class="kvo" @click="cl"><img src="/mans.jpg" alt=""></div>
 		<div class="kvo" @click="chose=0; $emit('chose', 0)">
 			<iconDesktop :clicked="chose"></iconDesktop>
 		</div>
@@ -101,6 +101,11 @@ export default {
 		color: white;
 	}
 
+	.kvo img {
+		height: 65px;
+		width: 65px;
+	}
+
 	.last {
 		position: absolute;
 		bottom: 0;
@@ -115,4 +120,5 @@ export default {
 	.clicked {
 		color: white;
 	}
+
 </style>

@@ -140,7 +140,7 @@ export default {
 	.content{
 		height: 100vh;
 		width: 100%;
-		background-color: #fff;
+		background-color: #f5f5f5;
 		position: relative;
 	}
 	.header{
@@ -148,6 +148,7 @@ export default {
 		display: flex;
 		flex-direction: row;
 		border-bottom: 1px solid rgba(0,0,0,0.1);
+		background-color: #ffffff;
 	}
 	.r-border{
 		border-right: 1px solid rgba(0,0,0,0.1);
@@ -272,9 +273,7 @@ export default {
 /*body*/
 	.body {
 		display: flex;
-		height: 100%;
 		padding: 15px;
-		background-color: #f5f5f5;
 	}
 	table {
 		width: 100%;

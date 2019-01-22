@@ -7,7 +7,7 @@
 			<polygon :class="{sR: clicked==0, fR: clicked==0, deskF: clicked!=0}" points="23.668,2.839 22.781,3.258 23.406,3.923 "/>
 			<path :class="{sB: clicked==0, fB: clicked==0, deskN: clicked!=0}" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M18.009,21.558c0,0.771-0.609,1.396-1.371,1.396h-5.186c-0.759,0-1.372-0.625-1.372-1.396v-0.229c0-0.771,0.613-1.396,1.372-1.396h5.186c0.762,0,1.371,0.623,1.371,1.396V21.558z"/>
 		</svg>
-		Рабочий стол
+		Рабочий <br> стол
 	</div>
 </template>
 

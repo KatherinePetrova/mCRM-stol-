@@ -1,5 +1,12 @@
 <template>
 	<div class="content">
+		<transition name="fade">
+			<div class="modal" v-if="show_modal">			
+				<div class="modal_main" @click="show_modal=false">
+					<div class="modal_body" v-on:click.stop=""></div>
+				</div>
+			</div>
+		</transition>
 		<div class="header">
 			<div class="about r-border child">
 				<div class="table_type table_type__vertical">
@@ -69,9 +76,9 @@
 					<tr class="groupName">
 						<td>Просроченные задачи</td>
 					</tr>
-					<tr class="task">
+					<tr class="task" @click="show_modal=true">
 						<td>
-							<div><input type="checkbox"></div>
+							<div><input type="checkbox" v-on:click.stop=""></div>
 							<div class="info">
 								<span>04.01.2019 23:59</span>
 								<span>Садвокасов Данияр</span>
@@ -159,8 +166,19 @@
 <script>
 
 export default {
+	data(){
+		return {
+			show_modal: false
+		}
+	},
+	methods: {
+		
+	},
   components: {
-  }
+  },
+  mounted(){
+		// document.querySelector('.modal_body').addEventListener("click",(event) => event.stopPropagation());
+	}
 }
 </script>
 
@@ -169,7 +187,7 @@ export default {
 	.content{
 		height: 100vh;
 		width: 100%;
-		background-color: #fff;
+		background-color: #f5f5f5;
 		position: relative;
 	}
 	.header{
@@ -177,6 +195,7 @@ export default {
 		display: flex;
 		flex-direction: row;
 		border-bottom: 1px solid rgba(0,0,0,0.1);
+		background-color: #ffffff;
 	}
 	.r-border{
 		border-right: 1px solid rgba(0,0,0,0.1);
@@ -301,9 +320,7 @@ export default {
 /*body*/
 	.body {
 		display: flex;
-		height: 100%;
 		padding: 15px;
-		background-color: #f5f5f5;
 	}
 	table {
 		width: 100%;
@@ -338,6 +355,10 @@ export default {
 		border-top: #e5e5e5 solid 1px;
 		border-bottom: #e5e5e5 solid 1px;;
 		width: 100%;
+	}
+
+	tr:hover {
+		background-color: #f8faff;
 	}
 
 	td {
@@ -376,6 +397,10 @@ export default {
 		font-size: 13px;
 	}
 
+	.groupName:hover {
+		background-color: #fff;
+	}
+
 	.task {
 		height: 65px;
 	}
@@ -384,5 +409,45 @@ export default {
 		display: flex;
 		flex-direction: column;
 		color: #7a7f85
+	}
+
+	/*modal*/
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+		opacity: 0;
+	}
+
+	.modal {
+		z-index: 99;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+
+	.modal_main {
+		height: 100%;
+		width: 100%;
+		background-color: rgba(255, 255, 255, .7);
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.modal_body {
+		width: 710px;
+		height: 180px;
+		background-color: #f5f5f5;
+		position: absolute;
+		border: 1px solid #d3d6d7;
+		box-shadow: 0 14px 24px 1px rgba(0,0,0,.1);
+			webkit-transition: opacity .1s,-webkit-transform .3s;
+    		transition: transform .3s,opacity .1s;
+    		transition: transform .3s,opacity .1s,-webkit-transform .3s;
+    	border-radius: 1px;
+    	z-index: 999;
+
 	}
 </style>
