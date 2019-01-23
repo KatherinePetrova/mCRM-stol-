@@ -72,6 +72,93 @@
           </div>
         </div>
       </div>
+      <div class="body">
+        <div class="news">
+          НОВЫЕ
+          <div>2</div>
+        </div>
+        <div class="rows">
+          <div>СЕЙЧАС</div>
+          <div>ПЕРЕШЛИ В ЭТАП</div>
+          <div>ПОТЕРЯННЫЕ</div>
+        </div>
+        <div class="step">
+          <div class="body">
+            <div class="content">
+              Новая сделка
+              <div>
+                <div>135 сделок</div>
+                <div>11105100 тг</div>
+              </div>
+            </div>
+            <div class="content1">
+              <div><font>25</font> сделок</div>
+              <div>152 154 тенге</div>
+            </div>
+          </div>
+          <div class="footer left">
+            0 сделок, 0 тенге
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stat_tasks">
+      <div class="block" style="color: rgb(255, 121, 121); border-top-color: rgb(255, 121, 121)">
+        <div class="header">
+          ПРОСРОЧЕННЫЕ ЗАДАЧИ
+          <div>!</div>
+        </div>
+        <div class="content">
+          6
+          <div>
+            <div style="font-size: 1.4rem">-13%</div>
+            <div style="font-size: 0.8rem">Вчера: 8</div>
+          </div>
+        </div>
+      </div>
+      <div class="block" style="color: rgb(60, 60, 60); border-top-color: rgb(60, 60, 60)">
+        <div class="header">
+          ЗАДАЧИ К ВЫПОЛНЕНИЮ
+        </div>
+        <div class="content">
+          675
+          <div>
+            <div style="font-size: 1.4rem">0%</div>
+            <div style="font-size: 0.8rem">Вчера: 675</div>
+          </div>
+        </div>
+      </div>
+      <div class="block" style="color: rgb(60, 60, 60); border-top-color: #7dbe26">
+        <div class="header">
+          ВЫПОЛНЕННЫЕ ЗАДАЧИ
+        </div>
+        <div class="content">
+          24
+          <div>
+            <div style="font-size: 1.4rem">+71%</div>
+            <div style="font-size: 0.8rem">Вчера: 14</div>
+          </div>
+        </div>
+      </div>
+      <div class="block" style="color: rgb(60, 60, 60); border-top-color: #ffcc66">
+        <div class="header">
+          СДЕЛОК БЕЗ ЗАДАЧ
+        </div>
+        <div class="content">
+          12783
+          <div>
+            <div style="font-size: 1.4rem">Сейчас</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stat_body">
+      <div class="sb_left">
+
+      </div>
+      <div class="sb_right">
+
+      </div>
     </div>
 	</div>
 </template>
@@ -82,17 +169,29 @@
 
 <style scoped>
 
+::-webkit-scrollbar {
+	width: 4px;
+}
+::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+	background: #888; 
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #555; 
+}
+
 html, body {
   padding: 0;
   margin: 0;
 }
   .main {
-    position: absolute;
-    left: 70px;
+    
 
-    width: calc(100%-70px);
-    min-width: calc(1024px -70px);
-    min-height: 100%;
+    width: 100%;
+    min-width: 768px;
+    min-height: 100vh;
   
     background-color: rgb(240, 240, 240);
     background-image: url('/desk.jpg');
@@ -102,6 +201,10 @@ html, body {
 
     display: flex;
     flex-direction: column;
+
+    overflow-y: auto;
+
+    padding-bottom: 2rem;
   }
 
   .marX {
@@ -111,6 +214,7 @@ html, body {
   /* header */
 
   .main>.header {
+    min-height: 4rem;
     height: 4rem;
     width: 100%;
 
@@ -192,11 +296,13 @@ html, body {
     font-size: 1.75em;
 
     height: 3rem;
+    min-height: 3rem;
     width: 100%;
 
     padding: 0;
 
     text-shadow: 1px 1px 1px black;
+
   }
 
   /* stat1 */
@@ -204,8 +310,8 @@ html, body {
   .main>.stat1 {
     /* background-color: black; */
 
-    height: 25rem;
-    min-height: 25rem;
+    height: 28rem;
+    min-height: 28rem;
     width: 100%;
 
     padding: 5px 15px;
@@ -220,6 +326,7 @@ html, body {
   /* stat1>header1 */
 
   .main>.stat1>.header1 {
+    min-height: 10%;
     height: 10%;
     width: 100%;
 
@@ -299,6 +406,7 @@ html, body {
   .main>.stat1>.header2 {
     /* background-color: black; */
 
+    min-height: 4.5rem;
     height: 4.5rem;
     width: 100%;
 
@@ -355,6 +463,315 @@ html, body {
   .main>.stat1>.header2>.chose>.right {
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
+  }
+
+  /* stat1>body */
+
+  .main>.stat1>.body {
+    /* background-color: black; */
+
+    min-height: 20rem;
+    height: 20em;
+    width: 100%;
+    min-width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    overflow-x: auto;
+
+    border: solid 1px white;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+
+    padding: 20px 0;
+  }
+
+  .main>.stat1>.body>.news {
+    /* background-color: black; */
+
+    min-width: 10%;
+    width: 10%;
+    height: 100%;
+
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 1px 1px 1px rgba(200, 200, 200, 0.5);
+    font-weight: 500;
+    font-size: 0.8rem;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    border-right: solid 1px white;
+  }
+
+  .main>.stat1>.body>.news>div {
+    font-size: 4rem;
+  }
+
+  .main>.stat1>.body>.rows {
+    /* background-color: black; */
+
+    min-width: 10%;
+    width: 10%;
+    height: 100%;
+
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 1px 1px 1px rgba(200, 200, 200, 0.5);
+    font-weight: 500;
+    font-size: 0.8rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 10px;
+    padding-top: 3rem;
+  }
+
+  .main>.stat1>.body>.step {
+    /* background-color: black; */
+
+    min-width: 12rem;
+    width: 12rem;
+    height: 100%;
+
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 1px 1px 1px rgba(200, 200, 200, 0.5);
+    font-weight: 400;
+    font-size: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin-right: 10px;
+  }
+
+  .main>.stat1>.body>.step>.body {
+
+    min-height: 80%;
+    height: 80%;
+    width: 100%;
+
+    border: solid 1px white;
+    border-top: solid 7px rgb(194, 233, 88);
+
+    padding-top: 5px;
+    padding-bottom: 1rem;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main>.stat1>.body>.step>.body>.content {
+    /* background-color: black; */
+
+    min-height: 50%;
+    height: 50%;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.1rem;
+  }
+
+  .main>.stat1>.body>.step>.body>.content>div {
+    min-height: 50%;
+    height: 50%;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem;
+  }
+
+  .main>.stat1>.body>.step>.body>.content1 {
+    min-height: 50%;
+    height: 50%;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: #36455a;
+
+    background-color: white;
+  }
+
+  .main>.stat1>.body>.step>.body>.content1>div>font {
+    /* margin-right: 5px; */
+    font-size: 1.8rem;
+  }
+
+  .main>.stat1>.body>.step>.footer {
+    min-height: 12%;
+    height: 12%;
+    width: 100%;
+
+    border: solid 1px white;
+    border-right-style: dashed;
+    border-left-style: dashed;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main>.stat1>.body>.step>.left {
+    border-left-style: solid;
+  }
+
+  .main>.stat1>.body>.step>.right {
+    border-right-style: solid;
+  }
+
+  /* stat_tasks */
+
+  .main>.stat_tasks {
+    /* background-color: black; */
+
+    height: 12rem;
+    min-height: 12rem;
+    width: 100%;
+    min-width: 100%;
+
+    position: relative;
+
+    padding: 5px 15px;
+
+    display: flex;
+    flex-direction: row;
+  }
+
+  .main>.stat_tasks>.block {
+    height: 100%;
+    min-height: 100%;
+    width: 25%;
+    min-width: 25%;
+
+    background-color: white;
+
+    border-right: solid 1px rgb(200, 200, 200);
+    border-top: solid 5px rgb(194, 233, 88);
+
+    padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    font-size: 0.8em;
+    font-weight: 700;
+  }
+
+  .main>.stat_tasks>.block>.header {
+    /* background-color: black; */
+
+    height: 15%;
+    min-height: 15%;
+    width: 100%;
+    min-width: 100%;
+
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+  }
+
+  .main>.stat_tasks>.block>.header>div {
+    height: 0.9rem;
+    width: 0.9rem;
+
+    border-radius: 50%;
+    background-color: rgb(255, 121, 121);
+    margin-left: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+  }
+
+  .main>.stat_tasks>.block>.content {
+    /* background-color: black; */
+
+    min-height: 50%;
+    height: 50%;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 5rem;
+    font-weight: 400;
+  }
+
+  .main>.stat_tasks>.block>.content>div {
+    width: 40%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    font-size: 1rem;
+    font-weight: 700;
+    padding-bottom: 5px;
+  }
+
+  .main>.stat_tasks>.block>.content>div>div {
+
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* stat_body */
+
+  .main>.stat_body {
+    /* background-color: black; */
+    width: 100%;
+    min-height: 200px;
+
+    padding: 5px 15px;
+
+    display: flex;
+  }
+
+  .main>.stat_body>.sb_left {
+
+    background-color: rgba(250,0,0,0.5);
+
+    height: 20rem;
+    
+    min-width: 66.6%;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main>.stat_body>.sb_right {
+    background-color: rgba(0,0,250,0.5);
+
+    height: 20rem;
+    
+    min-width: 33.3%;
+
+    display: flex;
+    flex-direction: column;
+
   }
 
 </style>
