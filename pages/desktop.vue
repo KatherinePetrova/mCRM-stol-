@@ -26,11 +26,13 @@ html, body {
 }
 
 .mainy {
+  overflow: hidden;
   background-color: #000;
   display: flex;
-  width: 100vw;
+  width: 100%;
   position: relative;
   min-height: 100vh;
+  height: 100vh;
   position: absolute;
   flex-direction: row;
 }
