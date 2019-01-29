@@ -45,10 +45,17 @@
       <div class="header2">
         <div class="chose">
           <div class="option left active">
-            Але
+            <svg height="50%" viewBox="0 0 29700 21000" class="strel">
+              <polygon class="kras" points="18025.03,4030.83 22605.35,9720.39 18025.03,15721.18 24036.69,15721.18 28935.08,9778.26 24036.69,4030.83 "/>
+              <polygon points="20914.57,9755.66 16238.84,4066.1 10099.96,4066.1 14680.26,9784.61 10163.58,15756.45 16207.04,15756.45 "/>
+              <polygon points="13047.79,9840 8213.02,4092.57 2074.14,4092.57 2074.14,15782.92 8244.83,15782.92 "/>
+            </svg>
           </div>
           <div class="option right">
-            Але
+            <svg height="50%" viewBox="0 0 29700 21000" class="pie">
+                <path d="M14752.87 11377.49l10238.65 51.8c-33.96,5284.37 -4645.48,9545 -10300.13,9516.39 -5654.65,-28.61 -10211.12,-4335.63 -10177.17,-9620 33.96,-5284.37 4645.48,-9545 10300.13,-9516.39l-61.48 9568.2z"/>
+                <path d="M15613.28 10253.77l107.01 -10085.81c5418.77,57.5 9763.65,4619.69 9704.54,10189.91l-9811.55 -104.1z"/>
+            </svg>
           </div>
         </div>
         <div class="chose" style="margin-right: 25%">
@@ -154,7 +161,21 @@
     </div>
     <div class="stat_body">
       <div class="sb_left">
-
+        <div class="block" style="margin-right: 5px; background-color: white; padding: 10px">
+          <div class="header">
+            ИСТОЧНИКИ СДЕЛОК
+          </div>
+          <div class="pie">
+            <div></div>
+          </div>
+        </div>
+        <div class="block" style="margin-left: 5px">
+          <div class="block" style="background-color: white"></div>
+          <div class="block">
+            <div class="block"></div>
+            <div class="block"></div>
+          </div>
+        </div>
       </div>
       <div class="sb_right">
 
@@ -443,6 +464,32 @@ html, body {
     cursor: pointer;
 
     margin-left: -1px;
+
+    white-space: nowrap;
+  }
+
+  .main>.stat1>.header2>.chose>.option>svg.pie>path {
+    fill: rgba(255, 255, 255, 0.5);
+  }
+
+  .main>.stat1>.header2>.chose>.option>svg.strel {
+    margin-top: 2px;
+  }
+  .main>.stat1>.header2>.chose>.option>svg.strel>polygon {
+    fill: rgba(255, 255, 255, 0.5);
+  }
+
+  .main>.stat1>.header2>.chose>.option:hover {
+    color: white;
+    border-color: white;
+  }
+
+  .main>.stat1>.header2>.chose>.option:hover svg.pie path {
+    fill: white;
+  }
+
+  .main>.stat1>.header2>.chose>.option:hover svg.strel polygon {
+    fill: white;
   }
 
   .main>.stat1>.header2>.chose>.active {
@@ -450,9 +497,12 @@ html, body {
     border-color: white;
   }
 
-  .main>.stat1>.header2>.chose>.option:hover {
-    color: white;
-    border-color: white;
+  .main>.stat1>.header2>.chose>.active svg.pie path {
+    fill: white;
+  }
+
+  .main>.stat1>.header2>.chose>.active svg.strel polygon {
+    fill: white;
   }
 
   .main>.stat1>.header2>.chose>.left {
@@ -729,6 +779,7 @@ html, body {
 
     font-size: 1rem;
     font-weight: 700;
+
     padding-bottom: 5px;
   }
 
@@ -743,35 +794,110 @@ html, body {
   .main>.stat_body {
     /* background-color: black; */
     width: 100%;
-    min-height: 200px;
 
     padding: 5px 15px;
 
-    display: flex;
+    display: block;
   }
 
   .main>.stat_body>.sb_left {
 
-    background-color: rgba(250,0,0,0.5);
+    /* background-color: rgba(250,0,0,0.5); */
+
+    min-width: 66.6%;
+
+    float: left;
+
+    display: block;
+  }
+
+  .main>.stat_body>.sb_left>.block {
+    /* background-color: black; */
 
     height: 20rem;
-    
-    min-width: 66.6%;
+    min-height: 20rem;
+    width: calc(50% - 5px);
+
+    float: left;
 
     display: flex;
     flex-direction: column;
+
+    /* padding: 10px; */
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    justify-content: space-between;
+    align-items: center
+  }
+
+  .main>.stat_body>.sb_left>.block>.header {
+
+    height: 10%;
+    min-height: 10%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main>.stat_body>.sb_left>.block>.pie {
+    background-color: rgb(71, 104, 250);
+
+    width: 16rem;
+    min-height: 16rem;
+    height: 16rem;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main>.stat_body>.sb_left>.block>.pie>div {
+    background-color: white;
+
+    width: 15rem;
+    min-height: 15rem;
+    height: 15rem;
+
+    border-radius: 50%;
+  }
+
+  .main>.stat_body>.sb_left>.block>.block {
+
+    /* background-color: white; */
+
+    height: calc(50% - 5px);
+    min-height: calc(50% - 5px);
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .main>.stat_body>.sb_left>.block>.block>.block {
+    height: 100%;
+    min-height: 100%;
+    width: calc(50% - 5px);
+
+    background-color: white;
   }
 
   .main>.stat_body>.sb_right {
     background-color: rgba(0,0,250,0.5);
-
-    height: 20rem;
     
-    min-width: 33.3%;
+    min-width: calc(33.3% - 10px);
 
-    display: flex;
-    flex-direction: column;
+    float: left;
 
+    display: block;
+    
+    margin-left: 10px;
   }
 
 </style>

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import desktop from '~/components/developing.vue';
+import desktop from '~/components/icons/deskS.vue';
 import lpanel from '~/components/lpanel.vue';
 
 export default {
