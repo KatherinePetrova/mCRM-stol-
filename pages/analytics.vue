@@ -1,17 +1,24 @@
 <template>
 	<div class="mainy">
       	<lpanel :chose="5"></lpanel>
-    	<desktop></desktop>
+        <!-- <signIn></signIn>
+ -->        <signUp></signUp>
+
    </div>
 </template>
 
 <script>
-import desktop from '~/components/developing.vue';
 import lpanel from '~/components/lpanel.vue';
+import signIn from '~/components/sign_in.vue';
+import signUp from '~/components/sign_up.vue';
 
 export default {
     
-    components: {desktop, lpanel},
+    components: {
+      lpanel,
+      signIn,
+      signUp,
+    },
 
     mounted(){     
       console.log('pop')
@@ -29,7 +36,6 @@ html, body {
   background-color: #000;
   display: flex;
   width: 100vw;
-  position: relative;
   min-height: 100vh;
   position: absolute;
   flex-direction: row;
