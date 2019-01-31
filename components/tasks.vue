@@ -3,7 +3,22 @@
 		<transition name="fade">
 			<div class="modal" v-if="show_modal">			
 				<div class="modal_main" @click="show_modal=false">
-					<div class="modal_body" v-on:click.stop=""></div>
+					<div class="modal_body" v-on:click.stop="">
+						<div>
+							<span style="color: #0150a1; cursor: pointer;">Lite buy</span>
+						</div>
+						<div>
+							<span style="color: #f38787;"><span>04.01.2019</span> (1 день)</span>
+							<span style="color: #7b7d81;"> для <span>Садвокасов Данияр</span></span> 
+							<span style="font-weight: bold;"> Связаться с клиентом</span>
+						</div>
+						<div style="width: 100%;">
+							<form @submit.prevent>
+								<input type="text" placeholder="Добавить результат" style="height: 38px; font-size: 15px; padding-left: 10px; outline: none; width: 80%;" required>
+								<input class="btn" type="submit" value="Выполнить" style="width: 110px; height: 38px;">
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</transition>
@@ -442,7 +457,7 @@ export default {
 
 	.modal_body {
 		width: 710px;
-		height: 180px;
+		height: 170px;
 		background-color: #f5f5f5;
 		position: absolute;
 		border: 1px solid #d3d6d7;
@@ -452,6 +467,19 @@ export default {
     		transition: transform .3s,opacity .1s,-webkit-transform .3s;
     	border-radius: 1px;
     	z-index: 999;
+    	padding: 30px;
+    	display: flex;
+    	flex-direction: column;
+    	justify-content: space-between;
+	}
 
+	.btn {
+	margin-left: 10px;
+    padding: 0 20px;
+    text-transform: none;
+    color: #fff;
+    height: 38px;
+    background-color: #c7c9ce;
+    border-color: #c7c9ce;
 	}
 </style>
