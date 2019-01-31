@@ -8,14 +8,25 @@
 </template>
 
 <script>
+import axios from 'axios'
 import lpanel from '~/components/lpanel.vue';
 
 export default {
     
     components: {lpanel},
 
-    async mounted(){
-    	this.$router.push('/leads/54654')
+    mounted(){
+
+		axios('http://crm.aziaimport.kz:3000/leads/select/pipelines', {
+			method: 'post',
+			withCredentials: true
+		}).then((res)=>{
+			for(var i=0; i<res.data.length; i++){
+				if(res.data[i].is_main==1){
+					this.$router.push(`/leads/${res.data[i].id}`);
+				}
+			}
+		});
     },
 }
 </script>
