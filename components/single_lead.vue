@@ -1,10 +1,10 @@
 <template>
-	<div class="right_ponel">
+	<div class="right_ponel" v-if="ready">
 			
 			<div class="about">
 				<div class="head">
 					<div class="lead_name">
-						<input type="text" spellcheck=false placeholder="Сделка #XXXXXX" >
+						<input type="text" spellcheck=false :placeholder="lead.name" :value="lead.name">
 						<button class="dots">
 							<div class="dot"></div>
 							<div class="dot"></div>
@@ -97,16 +97,20 @@ import axios from "axios";
 		try{
 			var lead = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
 				method: 'post',
-				data: {where: {id: 2235}, orderby: 'created_at'},
+				data: {where: {id: this.id}, orderby: 'created_at'},
 				withCredentials: true
 			});
-			console.log(lead)
+			this.lead = lead.data[0];
+			console.log(this.lead);
+
+			this.ready = true;
 		} catch(e){
 
 		}
 	},
   	data(){
   		return{
+			ready: false,
 			lead: {},
   			nony: false,
   			select_task: '',
@@ -146,11 +150,11 @@ import axios from "axios";
   					name: 'Доп. информация',
   					stroks: [
   						{
-  							name: 'кек',
+  							name: 'Ответственный',
   							value: 'Садвокасов Данияр'
   						},
   						{
-  							name: 'хуек',
+  							name: 'Оплата',
   							value: '5000'
   						},
   						{
