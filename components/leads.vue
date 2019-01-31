@@ -51,7 +51,7 @@
 					<span class="count">1425 сделок, 524 000тг</span>
 				</div>
 				<Container class="tasks" @drop='e=> onDrop(index, e)' v-if="ready">
-					<Draggable class="task" v-for="lead in item.leads" style="min-height: 5rem">
+					<Draggable class="task" v-for="lead, key in item.leads" :key="key" style="min-height: 5rem">
 						<nuxt-link :to="'/leads/single/' + lead.id">{{lead.name}}</nuxt-link>
 					</Draggable>
 				</Container>
@@ -118,7 +118,7 @@
 		});
 
 		try {
-			var steps = await axios('http://crm.aziaimport.kz:3000/api/where/step/1', {
+			var steps = await axios('http://crm.aziaimport.kz:3000/api/where/step/0', {
 				method: 'post',
 				withCredentials: true,
 				data: {where: {pipeline_id: this.id}}
@@ -127,7 +127,7 @@
 
 			for(var i=0; i<this.groups.length; i++){
 				this.groups[i].count = 1;
-				var leads = await axios('http://crm.aziaimport.kz:3000/api/where/leads/1', {
+				var leads = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
 					method: 'post',
 					withCredentials: true,
 					data: {where: {status: this.groups[i].id}, orderby: 'created_at'}
