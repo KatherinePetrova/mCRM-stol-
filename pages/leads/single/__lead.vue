@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
       <lpanel :chose="1"></lpanel>
-    	<lead></lead>
+    	<lead :id="id"></lead>
    </div>
 </template>
 
@@ -12,9 +12,12 @@ import lpanel from '~/components/lpanel.vue';
 export default {
     
     components: {lead, lpanel},
-
+    data(){
+      return {
+        id: this.$route.params._lead
+      }
+    },
     mounted(){     
-      console.log('pop')
     },
 }
 </script>

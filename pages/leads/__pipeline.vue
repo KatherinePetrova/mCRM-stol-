@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
       <lpanel :chose="1"></lpanel>
-    	<leads></leads>
+    	<leads :id="id"></leads>
    </div>
 </template>
 
@@ -9,12 +9,21 @@
 import leads from '~/components/leads.vue';
 import lpanel from '~/components/lpanel.vue';
 
+import axios from 'axios';
+
 export default {
     
     components: {leads, lpanel},
-
+    data(){
+      return {
+        id: this.$route.params._pipeline
+      }
+    },
+    methods: {
+      
+    },
     mounted(){     
-      console.log('pop')
+      console.log(this.pipeline)
     },
 }
 </script>

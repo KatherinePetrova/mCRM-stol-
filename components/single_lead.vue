@@ -4,7 +4,7 @@
 			<div class="about">
 				<div class="head">
 					<div class="lead_name">
-						<input type="text" spellcheck=false placeholder="Сделка #XXXXXX">
+						<input type="text" spellcheck=false placeholder="Сделка #XXXXXX" >
 						<button class="dots">
 							<div class="dot"></div>
 							<div class="dot"></div>
@@ -89,11 +89,25 @@
 </template>
 
 <script type="text/javascript">
-	import { Container, Draggable } from "vue-smooth-dnd";
+import axios from "axios";
   export default{
-  	components: { Container, Draggable },
+	props: ['id'],
+	async mounted(){
+		console.log(this.id);
+		try{
+			var lead = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
+				method: 'post',
+				data: {where: {id: 2235}, orderby: 'created_at'},
+				withCredentials: true
+			});
+			console.log(lead)
+		} catch(e){
+
+		}
+	},
   	data(){
   		return{
+			lead: {},
   			nony: false,
   			select_task: '',
   			selected_vklad: 0,

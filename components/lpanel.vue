@@ -1,6 +1,6 @@
 <template>
 	<div class="lpanel">
-		<div class="kvo" @click="cl"><img src="/mans.jpg" alt=""></div>
+		<div class="kvo"><img src="/mans.jpg" alt=""></div>
 		<nuxt-link class="kvo" to="/desktop">
 			<iconDesktop :clicked="chose"></iconDesktop>
 		</nuxt-link>

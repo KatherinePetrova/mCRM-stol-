@@ -2,19 +2,9 @@
 	<div class="content">
 		<div class="header">
 			<div class="about r-border child">
-				<span class="about-name">Отдел сервиса РК</span>
-
-				<div class="table_type table_type__vertical table_type__activate">
-					<div class="first_block block"></div>
-					<div class="second_block block"></div>
-					<div class="third_block block"></div>
-				</div>
-				<div class="table_type table_type__horrizontal">
-					<div class="first_block block"></div>
-					<div class="second_block block"></div>
-					<div class="third_block block"></div>
-				</div>
-
+				<select class="about-name" style="cursor: pointer" @change="changePip">
+					<option v-for="item in pipeline" :value="item.id" :selected="item.id==id">{{item.name}}</option>	
+				</select>
 			</div>
 
 			<div class="search r-border child">
@@ -26,7 +16,7 @@
 				<input type="text" placeholder="Поиск и фильтр" class="input">
 				<span class="deals">
 					<span class="count">559 сделок: </span>
-					<span class="value">504 196 400 тг</span>
+					<span class="value">504 400 тг</span>
 				</span>
 			</div>
 
@@ -55,13 +45,24 @@
 		</div>
 		<div class="body">
 
-			<div class="group" v-for="(group, group_id) in groups" :key="group_id">
-				<div class="title" :class="!group.id ? 'new' : ''">
-					<span class="name">{{group.name}}</span>
-					<span class="count">{{!group.id ? 'Заявок: ' + group.count : group.count + ' сделок: ' + group.money + 'тг'}}</span>
+			<div class="group" v-for="item, index in groups" :key="index">
+				<div class="title">
+					<span class="name">{{item.name}}</span>
+					<span class="count">1425 сделок, 524 000тг</span>
 				</div>
+				<Container class="tasks" @drop='e=> onDrop(index, e)' v-if="ready">
+					<Draggable class="task" v-for="lead in item.leads" style="min-height: 5rem">
+						<nuxt-link :to="'/leads/single/' + lead.id">{{lead.name}}</nuxt-link>
+					</Draggable>
+				</Container>
+<!-- 
+				<div class="tasks">
+					<div class="tasks" v-for="lead in item.leads">
+						{{lead.name}}
+					</div>
+				</div> -->
 
-				<Container class="tasks" :id="group.id" :group-name="group.id == 0 ? '' : 'unzero'" 
+				<!-- <Container class="tasks" :id="group.id" :group-name="group.id == 0 ? '' : 'unzero'" 
 									 @drop="e=> onDrop(group_id,e)"
 									 :get-child-payload="getCardPayload(group.id)">
 
@@ -88,7 +89,7 @@
 						</div>
 					</Draggable>
 					
-				</Container>
+				</Container> -->
 
 			</div>
 
@@ -97,83 +98,62 @@
 </template>
 <script>
   import { Container, Draggable } from "vue-smooth-dnd";
+  import axios from 'axios';
   export default{
-  	components: { Container, Draggable },
+	components: { Container, Draggable },
+	props: ['id'],  
   	data(){
-  		return{
-  			
-  			groups:[
-  			{
-  				name: 'Неразобранное',
-  				count: 0,
-  				id: 0,
-  				tasks:[]
-  			},
-  			{
-  				name: 'Новая заявка',
-  				count: 3,
-  				money: 9698156,
-  				id: 1,
-  				tasks:[
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 0,
-  					id: 0
-  				},
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 1,
-  					id: 1
-  				},
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 2,
-  					id: 2
-  				},
-  				]
-  			},
-  			{
-  				name: 'Получить с с/о рф',
-  				count: 1,
-  				money: 1088442,
-  				id: 3,
-  				tasks:[
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 0,
-  					id: 3
-  				},
-  				]
-  			},
+		return {
+			pipeline: [],
+			groups: [],
+			ready: false
+		}
+	},
+	async mounted(){
+		axios('http://crm.aziaimport.kz:3000/leads/select/pipelines', {
+			method: 'post',
+			withCredentials: true
+		}).then((res)=>{
+			this.pipeline = res.data.sort((a, b)=>(a.pos > b.pos) ? 1 : -1);
+		});
 
-  			],
-  		}
-  	},
+		try {
+			var steps = await axios('http://crm.aziaimport.kz:3000/api/where/step/1', {
+				method: 'post',
+				withCredentials: true,
+				data: {where: {pipeline_id: this.id}}
+			});
+			this.groups = steps.data;
+
+			for(var i=0; i<this.groups.length; i++){
+				this.groups[i].count = 1;
+				var leads = await axios('http://crm.aziaimport.kz:3000/api/where/leads/1', {
+					method: 'post',
+					withCredentials: true,
+					data: {where: {status: this.groups[i].id}, orderby: 'created_at'}
+				});
+				
+				this.groups[i].leads = leads.data;
+			}
+			this.ready = true;
+			
+		} catch(e){
+			console.log(e);
+		}		
+	},
   	methods: {
+
+		changePip(el){
+			this.$router.push(`/leads/${el.target.value}`)
+		},
   		onDrop(dropResult, e){
-  			if(e.removedIndex !== null) this.groups[dropResult].tasks.splice(e.removedIndex, 1)
-  				if(e.addedIndex !== null) this.groups[dropResult].tasks.splice(e.addedIndex, 0, e.payload)
+  			if(e.removedIndex !== null) this.groups[dropResult].leads.splice(e.removedIndex, 1)
+  				if(e.addedIndex !== null) this.groups[dropResult].leads.splice(e.addedIndex, 0, e.payload)
 
   			},
   		getCardPayload (columnId) {
   			return index => {
-  				return this.groups.filter(p => p.id === columnId)[0].tasks[index];
+  				return this.groups.filter(p => p.id === columnId)[0].leads[index];
   			}
   		},
   		widthInput(element){
@@ -185,7 +165,7 @@
 </script>
 <style scoped>
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 1px;
 }
 ::-webkit-scrollbar-track {
 	background: #f1f1f1; 
@@ -240,7 +220,7 @@ input[type=number]::-webkit-outer-spin-button {
 	.header>.child{
 		display: flex;
 		height: 100%;
-		padding: 1.5em 1.75em;
+		padding: 0.5em 1.75em;
 		width: auto;
 	}
 	.header>div.search{
@@ -257,7 +237,17 @@ input[type=number]::-webkit-outer-spin-button {
 		font-size: 0.95em;
 		margin-right: 20px;
 		white-space: nowrap;
+
+		height: 100%;
+
+		border: none;
+		outline: none;
 	}
+
+	.about-name>option {
+		padding: 100px 20px;
+	}
+
 	.table_type{
 		height: 100%; 
 		display: flex;
@@ -286,13 +276,13 @@ input[type=number]::-webkit-outer-spin-button {
 		height: 2px;
 	}
 	.table_type__vertical>.first_block{
-		height: 100%;
+		height: 50%;
 	}
 	.table_type__vertical>.second_block{
-		height: 75%;	
+		height: 35%;	
 	}
 	.table_type__vertical>.third_block{
-		height: 40%;
+		height: 20%;
 	}
 
 	.search>svg{
@@ -653,9 +643,10 @@ input[type=number]::-webkit-outer-spin-button {
 		flex-direction: row;
 	}
 	.body>.group{
-		overflow-y: hidden;
+		overflow: hidden;
 		height: 100%;
 		width: 332px;
+		min-width: 20rem;
 		padding-right: 20px;
 	}
 	.group>.title{
@@ -669,6 +660,10 @@ input[type=number]::-webkit-outer-spin-button {
 		border-bottom: 2px solid #313942;
 		color: #313942;
 		font-size: 0.8em;
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
+
 	}
 	.group>.title.new{
 		color: #626262;
