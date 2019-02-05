@@ -1,17 +1,20 @@
 <template>
 	<div class="mainy">
       	<lpanel :chose="4"></lpanel>
-    	<desktop></desktop>
+    	<mail></mail>
    </div>
 </template>
 
 <script>
-import desktop from '~/components/developing.vue';
+import mail from '~/components/mail.vue';
 import lpanel from '~/components/lpanel.vue';
 
 export default {
     
-    components: {desktop, lpanel},
+    components: {
+      lpanel,
+      mail
+   },
 
     mounted(){     
       console.log('pop')

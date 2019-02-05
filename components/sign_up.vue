@@ -8,7 +8,7 @@
 					<option v-for="">
   					</option>
 				</select>
-				<input class="input" type="email" placeholder="E-mail" required>
+				<input class="input" type="mail" placeholder="E-mail" required>
 				<input class="input" type="password" placeholder="Пароль" required>
 				<div class="aa" style="display: flex; justify-content: center;">
 					<a href="#">Войти</a>
