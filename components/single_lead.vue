@@ -115,7 +115,7 @@ import axios from "axios";
 	props: ['id'],
 	components: {},
 	async mounted(){
-		console.log(this.id);
+		console.log("\n\nHAS MOUNTED\n\n\n");
 		try{
 			var lead = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
 				method: 'post',
@@ -179,13 +179,8 @@ import axios from "axios";
 					} else {
 						this.vklads[i].stroks[j].value = ''
 					}
-					// this.vklads[i].stroks[j].value = val.data[0].value;
-					console.log(val)
 				}
 			}
-
-			console.log(this.lead)
-
 			this.ready = true;
 		} catch(e){
 
@@ -199,129 +194,8 @@ import axios from "axios";
   			nony: false,
   			select_task: '',
   			selected_vklad: 0,
-  			vklads: [
-  				{
-  					name: 'Основное',
-  					stroks: [
-  						{
-  							name: 'Ответственный',
-  							value: ''
-  						},
-  						{
-  							name: 'Бюджет',
-  							value: '5000'
-  						},
-  						{
-  							name: 'Курс рубля в счете на оплату',
-  							value: '5.7'
-  						},
-  						{
-  							name: '№ счета РК',
-  							value: '548944123'
-  						},
-  						{
-  							name: 'Процент',
-  							value: '7'
-  						},
-  						{
-  							name: 'Создатель сделки',
-  							value: 'Садвокасов Данияр'
-  						}
-  					]
-
-  				},
-  				{
-  					name: 'Доп. информация',
-  					stroks: [
-  						{
-  							name: 'Ответственный',
-  							value: 'Садвокасов Данияр'
-  						},
-  						{
-  							name: 'Оплата',
-  							value: '5000'
-  						},
-  						{
-  							name: 'Курс рубля в счете на оплату',
-  							value: '5.7'
-  						},
-  						{
-  							name: '№ счета РК',
-  							value: '548944123'
-  						},
-  						{
-  							name: 'Процент',
-  							value: '7'
-  						},
-  						{
-  							name: 'Создатель сделки',
-  							value: 'Садвокасов Данияр'
-  						}
-  					]
-
-  				}
-  			],
-  			groups:[
-  			{
-  				name: 'Неразобранное',
-  				count: 0,
-  				id: 0,
-  				tasks:[]
-  			},
-  			{
-  				name: 'Новая заявка',
-  				count: 3,
-  				money: 9698156,
-  				id: 1,
-  				tasks:[
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 0,
-  					id: 0
-  				},
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 1,
-  					id: 1
-  				},
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 2,
-  					id: 2
-  				},
-  				]
-  			},
-  			{
-  				name: 'Получить с с/о рф',
-  				count: 1,
-  				money: 1088442,
-  				id: 3,
-  				tasks:[
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 0,
-  					id: 3
-  				},
-  				]
-  			},
-
-  			],
+  			vklads: [],
+  			
   		}
 	  },
 	  
@@ -359,7 +233,7 @@ import axios from "axios";
 	transition: 1s;
 
 	animation-name: load;
-	animation-duration: 1s;
+	animation-duration: 2s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
 }

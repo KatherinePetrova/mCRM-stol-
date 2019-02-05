@@ -15,8 +15,8 @@
 				</svg>
 				<input type="text" placeholder="Поиск и фильтр" class="input">
 				<span class="deals">
-					<span class="count">559 сделок: </span>
-					<span class="value">504 400 тг</span>
+					<span class="count"></span>
+					<span class="value"></span>
 				</span>
 			</div>
 
@@ -45,14 +45,23 @@
 		</div>
 		<div class="body">
 
-			<div class="group" v-for="item, index in groups" :key="index">
+			<div class="group" v-for="(item, index) in groups" :key="index">
 				<div class="title">
 					<span class="name">{{item.name}}</span>
 					<span class="count">1425 сделок, 524 000тг</span>
 				</div>
-				<Container class="tasks" @drop='e=> onDrop(index, e)' v-if="ready">
-					<Draggable class="task" v-for="lead, key in item.leads" :key="key" style="min-height: 5rem">
-						<nuxt-link :to="'/leads/single/' + lead.id">{{lead.name}}</nuxt-link>
+				<Container :group-name="index == 0 ? '' : 'unzero'" :id="item.id" class="tasks" @drop='e=> onDrop(index, e)' @scroll="scroll(e)" :get-child-payload="getCardPayload(item.id)">
+					<Draggable class="task" v-for="(lead, key) in item.leads" :key="key" style="min-height: 5rem; cursor: move">
+						<div class="head">
+							<div class="names">
+								<span class="name__first">sdsd</span>
+								<span class="name__second" :title="lead.company.name" style="text-overflow: ellipsis">, {{lead.company.name}}</span>
+							</div>
+							<span class="date">{{date(lead.created_at)}}</span>
+						</div>
+						<div class="body">
+							<nuxt-link :to="'/leads/single/' + lead.id">{{lead.name}}</nuxt-link>
+						</div>
 					</Draggable>
 				</Container>
 <!-- 
@@ -98,61 +107,35 @@
 </template>
 <script>
   import { Container, Draggable } from "vue-smooth-dnd";
-  import axios from 'axios';
   export default{
 	components: { Container, Draggable },
-	props: ['id'],  
-  	data(){
-		return {
-			pipeline: [],
-			groups: [],
-			ready: false
-		}
-	},
-	async mounted(){
-		axios('http://crm.aziaimport.kz:3000/leads/select/pipelines', {
-			method: 'post',
-			withCredentials: true
-		}).then((res)=>{
-			this.pipeline = res.data.sort((a, b)=>(a.pos > b.pos) ? 1 : -1);
-		});
-
-		try {
-			var steps = await axios('http://crm.aziaimport.kz:3000/api/where/step/0', {
-				method: 'post',
-				withCredentials: true,
-				data: {where: {pipeline_id: this.id}}
-			});
-			this.groups = steps.data;
-
-			for(var i=0; i<this.groups.length; i++){
-				this.groups[i].count = 1;
-				var leads = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
-					method: 'post',
-					withCredentials: true,
-					data: {where: {status: this.groups[i].id}, orderby: 'created_at'}
-				});
-				
-				this.groups[i].leads = leads.data;
-			}
-			this.ready = true;
-			
-		} catch(e){
-			console.log(e);
-		}		
+	props: ['id', 'pipeline', 'groups'],
+	mounted(){
+		console.log(this.groups[6].leads[0])
 	},
   	methods: {
-
+		date(e){
+			return `${e.split('T')[0]} ${e.split('T')[1].split('.')[0]}`
+		},
+		scroll(e){
+			console.log(e);
+		},
 		changePip(el){
 			this.$router.push(`/leads/${el.target.value}`)
 		},
   		onDrop(dropResult, e){
-  			if(e.removedIndex !== null) this.groups[dropResult].leads.splice(e.removedIndex, 1)
-  				if(e.addedIndex !== null) this.groups[dropResult].leads.splice(e.addedIndex, 0, e.payload)
-
+			  if(e.removedIndex !== null && e.addedIndex !== null){
+				this.groups[dropResult].leads.splice(e.removedIndex, 1);
+				this.groups[dropResult].leads.splice(e.addedIndex, 0, e.payload); 
+				return;
+			  }
+			  if(e.removedIndex !== null) this.groups[dropResult].leads.splice(e.removedIndex, 1)
+			  else if(e.addedIndex !== null) this.groups[dropResult].leads.splice(e.addedIndex, 0, e.payload)
+				this.groups = this.groups;
   			},
   		getCardPayload (columnId) {
   			return index => {
+				  console.log(this.groups.filter(p => p.id === columnId)[0].leads[index])
   				return this.groups.filter(p => p.id === columnId)[0].leads[index];
   			}
   		},
@@ -702,12 +685,18 @@ input[type=number]::-webkit-outer-spin-button {
 	.task>.head>.names{
 		display: flex;
 		flex-direction: row;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 50%;
+		overflow: hidden;
 	}
 	.head>.names>.name__first{
 		color: #363b44;
 	}
 	.head>.names>.name__second{
 		color: #626262;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 	.task>.head>.date{
 		color: #626262;	

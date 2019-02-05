@@ -10,7 +10,7 @@ import lead from '~/components/single_lead.vue';
 import lpanel from '~/components/lpanel.vue';
 
 export default {
-    
+    transition: 'bounce',
     components: {lead, lpanel},
     data(){
       return {
