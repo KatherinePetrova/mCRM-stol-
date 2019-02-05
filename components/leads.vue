@@ -55,7 +55,7 @@
 						<div class="head">
 							<div class="names">
 								<span class="name__first">sdsd</span>
-								<span class="name__second" :title="lead.company.name" style="text-overflow: ellipsis">, {{lead.company.name}}</span>
+								<span class="name__second" :title="lead.company.name" style="text-overflow: ellipsis">, {{loh(lead.company.name)}}</span>
 							</div>
 							<span class="date">{{date(lead.created_at)}}</span>
 						</div>
@@ -64,42 +64,6 @@
 						</div>
 					</Draggable>
 				</Container>
-<!-- 
-				<div class="tasks">
-					<div class="tasks" v-for="lead in item.leads">
-						{{lead.name}}
-					</div>
-				</div> -->
-
-				<!-- <Container class="tasks" :id="group.id" :group-name="group.id == 0 ? '' : 'unzero'" 
-									 @drop="e=> onDrop(group_id,e)"
-									 :get-child-payload="getCardPayload(group.id)">
-
-					<Draggable class="task" :id="task.id" v-for="(task, task_id) in group.tasks" :key="task_id">
-						<div class="head">
-							<div class="names">
-								<span class="name__first">{{task.people}} , </span>
-								<span class="name__second">{{task.fabriс}}</span>
-							</div>
-							<span class="date">{{task.date}}</span>
-						</div>
-						<div class="body">
-							<nuxt-link to="/leads/single/0" class="deal_name">{{task.deal}}</nuxt-link>
-						</div>
-						<div class="foot">
-							<div class="foot-child">
-								<span class="value">{{task.value}} тг</span>
-								<div class="circle grey"></div>
-							</div>
-							<div class="foot-child">
-								<span class="have_task">{{task.have}}</span>
-								<div class="circle yellow"></div>
-							</div>
-						</div>
-					</Draggable>
-					
-				</Container> -->
-
 			</div>
 
 		</div>
@@ -114,6 +78,13 @@
 		console.log(this.groups[6].leads[0])
 	},
   	methods: {
+		loh(data){
+			if(data=='loh_company'){
+				return 'Неизвестнo'
+			} else {
+				return data
+			}
+		},
 		date(e){
 			return `${e.split('T')[0]} ${e.split('T')[1].split('.')[0]}`
 		},

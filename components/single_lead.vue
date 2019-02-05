@@ -18,8 +18,8 @@
 						<input type="text" id="new_tag" spellcheck=false>
 					</label>
 					<div class="steps">
-						<span class="title">Отдел сервиса РК</span>
-						<label for="select_strip" class="name">Новая заявка</label>
+						<span class="title">{{lead.pipeline.name}}</span>
+						<label for="select_strip" class="name">{{lead.step.name}}</label>
 						<div class="strip">
 							<div class="strip_color yellow"></div>
 							<div class="strip_color none"></div>
@@ -112,94 +112,22 @@
 <script type="text/javascript">
 import axios from "axios";
   export default{
-	props: ['id'],
+	props: ['ready', 'lead', 'tags', 'nony', 'select_task', 'vklads'],
 	components: {},
-	async mounted(){
-		console.log("\n\nHAS MOUNTED\n\n\n");
-		try{
-			var lead = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
-				method: 'post',
-				data: {where: {id: this.id}, orderby: 'created_at'},
-				withCredentials: true
-			});
-			this.lead = lead.data[0];
-			
-			var created_by = await axios('http://crm.aziaimport.kz:3000/api/where/users/0', {
-				method: 'post',
-				data: {where: {id: this.lead.created_by}},
-				withCredentials: true
-			});
-			created_by = created_by.data[0];
-			this.lead.created_by = created_by;
-
-
-			//tags
-			var tags = await axios('http://crm.aziaimport.kz:3000/api/where/tags_link/0', {
-				method: 'post',
-				data: {where: {related_id: this.id, type: 'leads'}, orderby: 'created_at'},
-				withCredentials: true
-			});
-			tags = tags.data;
-			for(var i=0; i<tags.length; i++){
-				var stag = await axios('http://crm.aziaimport.kz:3000/api/where/tags/0', {
-					method: 'post',
-					data: {where: {id: tags[i].tags_id}},
-					withCredentials: true
-				});
-
-				tags[i] = stag.data[0];
-			}
-			this.tags = tags;
-
-			//vklads
-			var vklads = await axios('http://crm.aziaimport.kz:3000/leads/select/card_groups', {
-				method: 'post',
-				withCredentials: true
-			});
-			this.vklads = vklads.data;
-
-			for(var i=0; i<this.vklads.length; i++){
-				var strok = await axios('http://crm.aziaimport.kz:3000/api/where/custom_fields/0', {
-					method: 'post',
-					data: {where: {group_id: this.vklads[i].id}},
-					withCredentials: true
-				});
-				this.vklads[i].stroks = strok.data;
-				
-				for(var j=0; j<this.vklads[i].stroks.length; j++){
-					
-					var val = await axios('http://crm.aziaimport.kz:3000/api/where/leads_value/0', {
-						method: 'post',
-						data: {where: {leads_id: this.lead.id, field_id: this.vklads[i].stroks[j].id}},
-						withCredentials: true
-					});
-
-					if(val.data.length!=0){
-						this.vklads[i].stroks[j].value = val.data[0].value;
-					} else {
-						this.vklads[i].stroks[j].value = ''
-					}
-				}
-			}
-			this.ready = true;
-		} catch(e){
-
+	data(){
+		return {
+			selected_vklad: 0
 		}
 	},
-  	data(){
-  		return{
-			ready: false,
-			lead: {},
-			tags: [],
-  			nony: false,
-  			select_task: '',
-  			selected_vklad: 0,
-  			vklads: [],
-  			
-  		}
-	  },
-	  
-
+	method: {
+		loh(data){
+			if(data=='loh_company'){
+				return 'Неизвестная компания'
+			} else {
+				return data
+			}
+		}
+	}
   }
 </script>
 
@@ -318,9 +246,9 @@ input[type=number]::-webkit-outer-spin-button {
 			display: flex;
 			padding: 1em 1.5em 0;
 			min-height: 11em;
-			max-height: 11em;
 			flex-direction: column;
 			background-color: #203d49;
+			position: relative;
 		}
 		.right_ponel>.about>.head>.lead_name{
 			display: flex;
@@ -392,7 +320,8 @@ input[type=number]::-webkit-outer-spin-button {
 			flex-direction: row;
 			justify-content: space-between;
 			bottom: 0;
-			width: 100%;
+			width: 95%;
+			position: absolute;
 		}
 		.right_ponel>.about>.head>.settings>.section{
 			color: #62757d;
