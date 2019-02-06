@@ -15,12 +15,12 @@
 				</svg>
 				<input type="text" placeholder="Поиск и фильтр" class="input">
 				<span class="deals">
-					<span class="count">559 сделок: </span>
-					<span class="value">504 400 тг</span>
+					<span class="count"></span>
+					<span class="value"></span>
 				</span>
 			</div>
 
-			<div class="setings child">
+			<div class="setings child" onscroll="">
 				<svg class="svg-icon svg-controls--button-more-dims">
 					<use xlink:href="#controls--button-more">
 						<svg viewBox="0 0 13 3" id="controls--button-more" width="100%" height="100%"><path id="dymore" class="dycls-1" d="M1.5 0A1.5 1.5 0 1 1 0 1.5 1.5 1.5 0 0 1 1.5 0zm5 0A1.5 1.5 0 1 1 5 1.5 1.5 1.5 0 0 1 6.5 0zm5 0A1.5 1.5 0 1 1 10 1.5 1.5 1.5 0 0 1 11.5 0z"></path></svg>		
@@ -45,52 +45,25 @@
 		</div>
 		<div class="body">
 
-			<div class="group" v-for="item, index in groups" :key="index">
+			<div class="group" v-for="(item, index) in groups" :key="index">
 				<div class="title">
 					<span class="name">{{item.name}}</span>
 					<span class="count">1425 сделок, 524 000тг</span>
 				</div>
-				<Container class="tasks" @drop='e=> onDrop(index, e)' v-if="ready">
-					<Draggable class="task" v-for="lead, key in item.leads" :key="key" style="min-height: 5rem">
-						<nuxt-link :to="'/leads/single/' + lead.id">{{lead.name}}</nuxt-link>
-					</Draggable>
-				</Container>
-<!-- 
-				<div class="tasks">
-					<div class="tasks" v-for="lead in item.leads">
-						{{lead.name}}
-					</div>
-				</div> -->
-
-				<!-- <Container class="tasks" :id="group.id" :group-name="group.id == 0 ? '' : 'unzero'" 
-									 @drop="e=> onDrop(group_id,e)"
-									 :get-child-payload="getCardPayload(group.id)">
-
-					<Draggable class="task" :id="task.id" v-for="(task, task_id) in group.tasks" :key="task_id">
+				<Container :group-name="index == 0 ? '' : 'unzero'" :id="item.id" class="tasks" @drop='e=> onDrop(index, e)' @scroll="scroll(e)" :get-child-payload="getCardPayload(item.id)">
+					<Draggable class="task" v-for="(lead, key) in item.leads" :key="key" style="min-height: 5rem; cursor: move">
 						<div class="head">
 							<div class="names">
-								<span class="name__first">{{task.people}} , </span>
-								<span class="name__second">{{task.fabriс}}</span>
+								<span class="name__first">{{loh(lead.contact.name)}}</span>
+								<span class="name__second" :title="lead.company.name" style="text-overflow: ellipsis">, {{loh(lead.company.name)}}</span>
 							</div>
-							<span class="date">{{task.date}}</span>
+							<span class="date">{{date(lead.created_at)}}</span>
 						</div>
 						<div class="body">
-							<nuxt-link to="/leads/single/0" class="deal_name">{{task.deal}}</nuxt-link>
-						</div>
-						<div class="foot">
-							<div class="foot-child">
-								<span class="value">{{task.value}} тг</span>
-								<div class="circle grey"></div>
-							</div>
-							<div class="foot-child">
-								<span class="have_task">{{task.have}}</span>
-								<div class="circle yellow"></div>
-							</div>
+							<nuxt-link :to="'/leads/single/' + lead.id">{{lead.name}}</nuxt-link>
 						</div>
 					</Draggable>
-					
-				</Container> -->
-
+				</Container>
 			</div>
 
 		</div>
@@ -98,61 +71,42 @@
 </template>
 <script>
   import { Container, Draggable } from "vue-smooth-dnd";
-  import axios from 'axios';
   export default{
 	components: { Container, Draggable },
-	props: ['id'],  
-  	data(){
-		return {
-			pipeline: [],
-			groups: [],
-			ready: false
-		}
-	},
-	async mounted(){
-		axios('http://crm.aziaimport.kz:3000/leads/select/pipelines', {
-			method: 'post',
-			withCredentials: true
-		}).then((res)=>{
-			this.pipeline = res.data.sort((a, b)=>(a.pos > b.pos) ? 1 : -1);
-		});
-
-		try {
-			var steps = await axios('http://crm.aziaimport.kz:3000/api/where/step/0', {
-				method: 'post',
-				withCredentials: true,
-				data: {where: {pipeline_id: this.id}}
-			});
-			this.groups = steps.data;
-
-			for(var i=0; i<this.groups.length; i++){
-				this.groups[i].count = 1;
-				var leads = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
-					method: 'post',
-					withCredentials: true,
-					data: {where: {status: this.groups[i].id}, orderby: 'created_at'}
-				});
-				
-				this.groups[i].leads = leads.data;
-			}
-			this.ready = true;
-			
-		} catch(e){
-			console.log(e);
-		}		
+	props: ['id', 'pipeline', 'groups'],
+	mounted(){
+		
 	},
   	methods: {
-
+		loh(data){
+			if(data=='loh_company' || data=='loh_contact'){
+				return 'Неизвестнo'
+			} else {
+				return data
+			}
+		},
+		date(e){
+			return `${e.split('T')[0]} ${e.split('T')[1].split('.')[0]}`
+		},
+		scroll(e){
+			console.log(e);
+		},
 		changePip(el){
 			this.$router.push(`/leads/${el.target.value}`)
 		},
   		onDrop(dropResult, e){
-  			if(e.removedIndex !== null) this.groups[dropResult].leads.splice(e.removedIndex, 1)
-  				if(e.addedIndex !== null) this.groups[dropResult].leads.splice(e.addedIndex, 0, e.payload)
-
+			  if(e.removedIndex !== null && e.addedIndex !== null){
+				this.groups[dropResult].leads.splice(e.removedIndex, 1);
+				this.groups[dropResult].leads.splice(e.addedIndex, 0, e.payload); 
+				return;
+			  }
+			  if(e.removedIndex !== null) this.groups[dropResult].leads.splice(e.removedIndex, 1)
+			  else if(e.addedIndex !== null) this.groups[dropResult].leads.splice(e.addedIndex, 0, e.payload)
+				this.groups = this.groups;
   			},
   		getCardPayload (columnId) {
   			return index => {
+				  console.log(this.groups.filter(p => p.id === columnId)[0].leads[index])
   				return this.groups.filter(p => p.id === columnId)[0].leads[index];
   			}
   		},
@@ -702,12 +656,18 @@ input[type=number]::-webkit-outer-spin-button {
 	.task>.head>.names{
 		display: flex;
 		flex-direction: row;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 50%;
+		overflow: hidden;
 	}
 	.head>.names>.name__first{
 		color: #363b44;
 	}
 	.head>.names>.name__second{
 		color: #626262;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 	.task>.head>.date{
 		color: #626262;	

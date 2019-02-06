@@ -18,8 +18,8 @@
 						<input type="text" id="new_tag" spellcheck=false>
 					</label>
 					<div class="steps">
-						<span class="title">Отдел сервиса РК</span>
-						<label for="select_strip" class="name">Новая заявка</label>
+						<span class="title">{{lead.pipeline.name}}</span>
+						<label for="select_strip" class="name">{{lead.step.name}}</label>
 						<div class="strip">
 							<div class="strip_color yellow"></div>
 							<div class="strip_color none"></div>
@@ -61,34 +61,35 @@
 							<span class="name">{{item.name}}</span>
 						</div>
 						<div class="child">
-							<input class="text" type="text" :value="item.value" style="font-size: 1.11rem">
+							<input class="text" type="text" :value="item.value" style="font-size: 1.11rem" placeholder="Не указано">
 						</div>
 					</div>
 					<div class="child" style="border-bottom: 1px solid #62757d; margin: 15px 0" v-if="selected_vklad==0"></div>
 					<div class="contact" v-if="selected_vklad==0">
 						<div class="img"></div>
-						<input type="text" value="Нуруллаев Мансур">
+						<input type="text" :value="loh(lead.main_contact.name)">
 						<button class="dots">
 							<div class="dot"></div>
 							<div class="dot"></div>
 							<div class="dot"></div>
 						</button>
 					</div>
-					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
+					<div class="input" v-for="item in lead.main_contact.stroks" v-if="selected_vklad==0 && lead.main_contact.clicked">
 						<div class="child">
 							<span class="name">{{item.name}}</span>
 						</div>
 						<div class="child">
 							<input class="text" type="text" :value="item.value" >
 						</div>
-					</div>
-					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
-						<div class="child">
-							<span class="name">{{item.name}}</span>
-						</div>
-						<div class="child">
-							<input class="text" type="text" :value="item.value">
-						</div>
+					</div> 
+					<div class="contact" v-if="selected_vklad==0" v-for="item in lead.add_contacts">
+						<div class="img"></div>
+						<input type="text" :value="loh(item.name)">
+						<button class="dots">
+							<div class="dot"></div>
+							<div class="dot"></div>
+							<div class="dot"></div>
+						</button>
 					</div>
 				</div>
 
@@ -112,220 +113,17 @@
 <script type="text/javascript">
 import axios from "axios";
   export default{
-	props: ['id'],
+	props: ['lead', 'tags', 'select_task', 'vklads', 'ready', 'selected_vklad'],
 	components: {},
-	async mounted(){
-		console.log(this.id);
-		try{
-			var lead = await axios('http://crm.aziaimport.kz:3000/api/where/leads/0', {
-				method: 'post',
-				data: {where: {id: this.id}, orderby: 'created_at'},
-				withCredentials: true
-			});
-			this.lead = lead.data[0];
-			
-			var created_by = await axios('http://crm.aziaimport.kz:3000/api/where/users/0', {
-				method: 'post',
-				data: {where: {id: this.lead.created_by}},
-				withCredentials: true
-			});
-			created_by = created_by.data[0];
-			this.lead.created_by = created_by;
-
-
-			//tags
-			var tags = await axios('http://crm.aziaimport.kz:3000/api/where/tags_link/0', {
-				method: 'post',
-				data: {where: {related_id: this.id, type: 'leads'}, orderby: 'created_at'},
-				withCredentials: true
-			});
-			tags = tags.data;
-			for(var i=0; i<tags.length; i++){
-				var stag = await axios('http://crm.aziaimport.kz:3000/api/where/tags/0', {
-					method: 'post',
-					data: {where: {id: tags[i].tags_id}},
-					withCredentials: true
-				});
-
-				tags[i] = stag.data[0];
+	methods: {
+		loh(data){
+			if(data=='loh_contact'){
+				return 'Неизвестный контакт'
+			} else {
+				return data
 			}
-			this.tags = tags;
-
-			//vklads
-			var vklads = await axios('http://crm.aziaimport.kz:3000/leads/select/card_groups', {
-				method: 'post',
-				withCredentials: true
-			});
-			this.vklads = vklads.data;
-
-			for(var i=0; i<this.vklads.length; i++){
-				var strok = await axios('http://crm.aziaimport.kz:3000/api/where/custom_fields/0', {
-					method: 'post',
-					data: {where: {group_id: this.vklads[i].id}},
-					withCredentials: true
-				});
-				this.vklads[i].stroks = strok.data;
-				
-				for(var j=0; j<this.vklads[i].stroks.length; j++){
-					
-					var val = await axios('http://crm.aziaimport.kz:3000/api/where/leads_value/0', {
-						method: 'post',
-						data: {where: {leads_id: this.lead.id, field_id: this.vklads[i].stroks[j].id}},
-						withCredentials: true
-					});
-
-					if(val.data.length!=0){
-						this.vklads[i].stroks[j].value = val.data[0].value;
-					} else {
-						this.vklads[i].stroks[j].value = ''
-					}
-					// this.vklads[i].stroks[j].value = val.data[0].value;
-					console.log(val)
-				}
-			}
-
-			console.log(this.lead)
-
-			this.ready = true;
-		} catch(e){
-
 		}
-	},
-  	data(){
-  		return{
-			ready: false,
-			lead: {},
-			tags: [],
-  			nony: false,
-  			select_task: '',
-  			selected_vklad: 0,
-  			vklads: [
-  				{
-  					name: 'Основное',
-  					stroks: [
-  						{
-  							name: 'Ответственный',
-  							value: ''
-  						},
-  						{
-  							name: 'Бюджет',
-  							value: '5000'
-  						},
-  						{
-  							name: 'Курс рубля в счете на оплату',
-  							value: '5.7'
-  						},
-  						{
-  							name: '№ счета РК',
-  							value: '548944123'
-  						},
-  						{
-  							name: 'Процент',
-  							value: '7'
-  						},
-  						{
-  							name: 'Создатель сделки',
-  							value: 'Садвокасов Данияр'
-  						}
-  					]
-
-  				},
-  				{
-  					name: 'Доп. информация',
-  					stroks: [
-  						{
-  							name: 'Ответственный',
-  							value: 'Садвокасов Данияр'
-  						},
-  						{
-  							name: 'Оплата',
-  							value: '5000'
-  						},
-  						{
-  							name: 'Курс рубля в счете на оплату',
-  							value: '5.7'
-  						},
-  						{
-  							name: '№ счета РК',
-  							value: '548944123'
-  						},
-  						{
-  							name: 'Процент',
-  							value: '7'
-  						},
-  						{
-  							name: 'Создатель сделки',
-  							value: 'Садвокасов Данияр'
-  						}
-  					]
-
-  				}
-  			],
-  			groups:[
-  			{
-  				name: 'Неразобранное',
-  				count: 0,
-  				id: 0,
-  				tasks:[]
-  			},
-  			{
-  				name: 'Новая заявка',
-  				count: 3,
-  				money: 9698156,
-  				id: 1,
-  				tasks:[
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 0,
-  					id: 0
-  				},
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 1,
-  					id: 1
-  				},
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 2,
-  					id: 2
-  				},
-  				]
-  			},
-  			{
-  				name: 'Получить с с/о рф',
-  				count: 1,
-  				money: 1088442,
-  				id: 3,
-  				tasks:[
-  				{
-  					people: 'Нурман',
-  					fabriс: 'КемалханСтройЭл',
-  					date: '04.01.2019',
-  					deal: 'ФАКТОР ГРУПП №18/2812-02 от 28.12.18г.',
-  					value: 1088442,
-  					have: 0,
-  					id: 3
-  				},
-  				]
-  			},
-
-  			],
-  		}
-	  },
-	  
-
+	}
   }
 </script>
 
@@ -359,7 +157,7 @@ import axios from "axios";
 	transition: 1s;
 
 	animation-name: load;
-	animation-duration: 1s;
+	animation-duration: 2s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
 }
@@ -444,9 +242,9 @@ input[type=number]::-webkit-outer-spin-button {
 			display: flex;
 			padding: 1em 1.5em 0;
 			min-height: 11em;
-			max-height: 11em;
 			flex-direction: column;
 			background-color: #203d49;
+			position: relative;
 		}
 		.right_ponel>.about>.head>.lead_name{
 			display: flex;
@@ -518,7 +316,8 @@ input[type=number]::-webkit-outer-spin-button {
 			flex-direction: row;
 			justify-content: space-between;
 			bottom: 0;
-			width: 100%;
+			width: 95%;
+			position: absolute;
 		}
 		.right_ponel>.about>.head>.settings>.section{
 			color: #62757d;
@@ -562,9 +361,11 @@ input[type=number]::-webkit-outer-spin-button {
 		}
 		.right_ponel>.about>.body>.input>.child>.text{
 			border: none;
+			outline: none;
 			background-color: transparent;
 		}
 		.right_ponel>.about>.body>.input>.child>.text:focus{
+			margin-top: -1px;
 			border-bottom: 1px solid #4c8bf7;
 		}
 		.right_ponel>.about>.body>.input>.child>.doesn_t{
