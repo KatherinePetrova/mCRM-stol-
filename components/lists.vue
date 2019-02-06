@@ -1,8 +1,15 @@
 <template>
-	<div class="content">
+	<div class="content" v-if="ready">
 		<div class="header">
 			<div class="about r-border child">
-				<span class="about-name">Контакты</span>
+				<span class="about-name" @click="dropIt">Контакты</span>
+				<transition name="slide">
+				    <ul class="list" v-if="isDropped">
+				      <li>Контакты</li>
+				      <li>Компании</li>
+				      <li>Все контакты и компании</li>
+				    </ul>
+				 </transition>
 <!-- 
 				<div class="table_type table_type__vertical">
 					<div class="first_block block"></div>
@@ -65,84 +72,127 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="task">
+					<tr class="task" v-for="item in link">
 						<td>
 							<div><input type="checkbox"></div>
 							<div class="info">
-								<span>"EURASIAN CONSTRUCTION"</span>
+								<span>"{{item.contact.name}}"</span>
 							</div>
 							<div class="point"><span>&bull;</span></div>
 						</td>
 						<td>
 							<div class="info">
-								<span>TOO "EURASIAN CONSTRUCTION"</span>
+								<span>{{item.company.name}}</span>
 							</div>
 						</td>
 					</tr>
-					<tr class="task">
-						<td>
-							<div><input type="checkbox"></div>
-							<div class="info">
-								<span>"EURASIAN CONSTRUCTION"</span>
-							</div>
-							<div class="point"><span>&bull;</span></div>
-						</td>
-						<td>
-							<div class="info">
-								<span>TOO "EURASIAN CONSTRUCTION"</span>
-							</div>
-						</td>
-					</tr>
-					<tr class="task">
-						<td>
-							<div><input type="checkbox"></div>
-							<div class="info">
-								<span>"EURASIAN CONSTRUCTION"</span>
-							</div>
-							<div class="point"><span>&bull;</span></div>
-						</td>
-						<td>
-							<div class="info">
-								<span>TOO "EURASIAN CONSTRUCTION"</span>
-							</div>
-						</td>
-					</tr>
-					<tr class="task">
-						<td>
-							<div><input type="checkbox"></div>
-							<div class="info">
-								<span>"EURASIAN CONSTRUCTION"</span>
-							</div>
-							<div class="point"><span>&bull;</span></div>
-						</td>
-						<td>
-							<div class="info">
-								<span>TOO "EURASIAN CONSTRUCTION"</span>
-							</div>
-						</td>
-					</tr>
+					
 				</tbody>
 			</table>
 		</div>
 	</div>
+	<div class="loading" v-else>
+        <div></div>
+      </div>
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
+	props: ['page'],
   components: {
   },
   data(){
 	  return {
-		  dfld: [
-			  
-		  ]
+	  	ready: false,
+		 count: this.page*40+1,
+		 link: [],
+		 isDropped: false,
 	  }
+  },
+  methods: {
+		dropIt() {
+      		this.isDropped = !this.isDropped
+    	}
+	},
+  async mounted(){
+  	console.log(this.count)
+  	try{
+
+		var link = await axios(`http://crm.aziaimport.kz:3000/api/where/leads_company_contacts/${this.count}`, {
+				method: 'post',
+				withCredentials: true,
+				data: {}
+		});
+		this.link = link.data;
+
+		for (var i = 0; i < this.link.length; i++) {
+			var contact = await axios(`http://crm.aziaimport.kz:3000/api/where/contacts/0`, {
+				method: 'post',
+				withCredentials: true,
+				data: {where:{id:this.link[i].contact_id}}
+			});
+			console.log(contact);
+			this.link[i].contact = contact.data[0];
+
+			var company = await axios(`http://crm.aziaimport.kz:3000/api/where/leads_company/0`, {
+				method: 'post',
+				withCredentials: true,
+				data: {where:{id:this.link[i].leads_company_id}}
+			});
+			console.log(company);
+			this.link[i].company = company.data[0];
+		}
+		console.log(this.link);
+  		this.ready = true;
+  	} catch(e){
+  		console.log(e)
+  	}
+
+  	
   }
 }
 </script>
 
 <style scoped>
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+
+  min-height: 100vh;
+  min-width: calc(100%-70px);
+
+  left: 70px;
+
+  border-width: 20px;
+}
+
+.loading>div {
+  background-color: white;
+
+  height: 10em;
+  width: 10em;
+
+  border-radius: 50%;
+
+  transition: 1s;
+
+  animation-name: load;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes load {
+  0% {height: 10em; width: 10em; background-color: rgba(140, 140, 240, 0.5)}
+  25% {height: 5em; width: 5em; background-color: rgba(140, 240, 140, 0.5)}
+  50% {height: 10em; width: 10em; background-color: rgba(240, 140, 140, 0.5)}
+  75% {height: 5em; width: 5em; background-color: rgba(140, 140, 240, 0.5)}
+  100% {height: 10em; width: 10em; background-color: rgba(140, 240, 140, 0.5)}
+}
 /*header*/
 	.content{
 		height: 100vh;
@@ -151,15 +201,19 @@ export default {
 		position: relative;
 		width: calc(100%-70px);
 		left: 70px;
-		background-color: #fff;
 		position: absolute;
+		top: 64px;
 	}
 	.header{
 		height: 64px;
+		width: calc(100%-70px);
 		display: flex;
 		flex-direction: row;
 		border-bottom: 1px solid rgba(0,0,0,0.1);
 		background-color: #ffffff;
+		z-index: 999;
+		position: fixed;
+		top: 0;
 	}
 	.r-border{
 		border-right: 1px solid rgba(0,0,0,0.1);
@@ -180,10 +234,11 @@ export default {
 
 	.about-name{
 		text-transform: uppercase;
-		font-weight: 600;
+		font-weight: 700;
 		font-size: 0.95em;
 		margin-right: 20px;
 		white-space: nowrap;
+		cursor: pointer;
 	}
 	.table_type{
 		height: 100%; 
@@ -230,7 +285,7 @@ export default {
 		border: none;
 		outline: none;
 		font-size: 100%;
-		width: 700px;
+		width: 650px;
 	}
 	.search>.input::placeholder{
 		color: rgba(0,0,0,0.33);
@@ -280,6 +335,29 @@ export default {
 	}
 	.dwm div {
 		padding: 5px;
+	}
+
+	.list{
+  			position: fixed;
+  			top: 64px;
+  			left: 70px;
+  			width: 160px;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+			transform-origin: top;
+			transition: transform .4s ease-in-out;
+			overflow: hidden;
+
+	}
+	.list li {
+		    padding: 15px;
+		    background-color: #d4d0d0;
+		    border-bottom: solid thin #eee;
+		    border-left: solid medium #cbc;
+  		}
+	.slide-enter, .slide-leave-to{
+  		transform: scaleY(0);
 	}
 /*body*/
 	.body {
