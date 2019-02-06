@@ -1,16 +1,16 @@
 <template>
 	<div class="main">
-		<logo></logo>
-		<nuxt-link to="/leads" style="margin-top: 20px">Перейти</nuxt-link>
+		<signin></signin>
 	</div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue';
+import signin from '~/components/sign_in.vue';
 
 export default {
+	transition: 'reg',
   components: {
-    Logo
+    signin
   }
 }
 </script>

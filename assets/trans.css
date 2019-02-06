@@ -6,6 +6,11 @@
     /* transform: translate(100%, 0); */
   }
   
+  .reg-leave-active {
+    transition: 1s;
+    transform: scale(0.8);
+  }
+
   .bounce-enter-active {
     animation: bounce-in .5s;
   }

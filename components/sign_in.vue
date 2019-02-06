@@ -3,12 +3,13 @@
 		<div class="window_sign">
 			<span style="margin-bottom: 50px;">Вход</span>
 			<form @submit.prevent class="form_sign">
-				<input type="text" placeholder="Имя пользователя" required>
+				<input class="input" type="text" placeholder="Имя пользователя" required>
 				<input class="input" type="password" placeholder="Пароль" required>
 				<div class="aa" style="display: flex; justify-content: center;">
 					<a href="#">Регистрация</a>
 				</div>
 				<input class="input" type="submit" value="Войти" style="width: 50% ">
+				<nuxt-link to="/leads" style="font-size: 1rem">Обходная ссылка</nuxt-link>
 			</form>
 		</div>
 	</div>
