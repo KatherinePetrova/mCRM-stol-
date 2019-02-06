@@ -67,7 +67,8 @@ export default {
 		background-color: #1b3446;
 		display: flex;
 		flex-direction: column;
-		position: relative;
+		position: fixed;
+		z-index: 999;
 	}
 
 	.kvo {

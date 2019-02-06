@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
-      	<lpanel :chose="3"></lpanel>
-    	<lists></lists>
+      <lpanel :chose="3"></lpanel>
+    	<lists :page="$route.params._pages"></lists>
    </div>
 </template>
 
@@ -12,9 +12,11 @@ import lpanel from '~/components/lpanel.vue';
 export default {
     
     components: {lists, lpanel},
-
-    mounted(){     
-      console.log('pop')
+    data(){
+      return {
+      }
+    },
+    mounted(){  
     },
 }
 </script>
@@ -28,7 +30,7 @@ html, body {
 .main {
   background-color: #000;
   display: flex;
-  width: 100vw;
+  width: 100%;
   position: relative;
   min-height: 100vh;
   position: absolute;

@@ -58,7 +58,7 @@
 				<!-- <span class="deals">
 					<span class="count">559 сделок: </span>
 					<span class="value">504 196 400 тг</span>
-				</span> -->
+				</span>  -->
 			</div>
 
 			<div class="setings child">
@@ -191,9 +191,24 @@ export default {
 	},
   components: {
   },
-  mounted(){
-		// document.querySelector('.modal_body').addEventListener("click",(event) => event.stopPropagation());
-	}
+ async mounted(){
+  	console.log(this.count)
+  	try{
+
+		var link = await axios(`http://crm.aziaimport.kz:3000/api/where/leads_company_contacts/${this.count}`, {
+				method: 'post',
+				withCredentials: true,
+				data: {}
+		});
+		this.link = link.data;
+		console.log(this.link);
+  		this.ready = true;
+  	} catch(e){
+  		console.log(e)
+  	}
+
+  	
+  }
 }
 </script>
 
@@ -205,7 +220,6 @@ export default {
 		background-color: #f5f5f5;
 		position: relative;
 		width: calc(100% - 70px);
-		background-color: #fff;
 		position: absolute;
 		left: 70px;
 	}
