@@ -20,7 +20,7 @@
 				</span>
 			</div>
 
-			<div class="setings child">
+			<div class="setings child" onscroll="">
 				<svg class="svg-icon svg-controls--button-more-dims">
 					<use xlink:href="#controls--button-more">
 						<svg viewBox="0 0 13 3" id="controls--button-more" width="100%" height="100%"><path id="dymore" class="dycls-1" d="M1.5 0A1.5 1.5 0 1 1 0 1.5 1.5 1.5 0 0 1 1.5 0zm5 0A1.5 1.5 0 1 1 5 1.5 1.5 1.5 0 0 1 6.5 0zm5 0A1.5 1.5 0 1 1 10 1.5 1.5 1.5 0 0 1 11.5 0z"></path></svg>		
@@ -54,7 +54,7 @@
 					<Draggable class="task" v-for="(lead, key) in item.leads" :key="key" style="min-height: 5rem; cursor: move">
 						<div class="head">
 							<div class="names">
-								<span class="name__first">sdsd</span>
+								<span class="name__first">{{loh(lead.contact.name)}}</span>
 								<span class="name__second" :title="lead.company.name" style="text-overflow: ellipsis">, {{loh(lead.company.name)}}</span>
 							</div>
 							<span class="date">{{date(lead.created_at)}}</span>
@@ -75,11 +75,11 @@
 	components: { Container, Draggable },
 	props: ['id', 'pipeline', 'groups'],
 	mounted(){
-		console.log(this.groups[6].leads[0])
+		
 	},
   	methods: {
 		loh(data){
-			if(data=='loh_company'){
+			if(data=='loh_company' || data=='loh_contact'){
 				return 'Неизвестнo'
 			} else {
 				return data

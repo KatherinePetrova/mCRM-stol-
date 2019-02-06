@@ -50,6 +50,14 @@ export default {
             leads_company = leads_company.data[0];
 
             leads[j].company = leads_company;
+
+            var leads_contact = await axios(`http://crm.aziaimport.kz:3000/api/where/contacts/0`, {
+              method: 'post',
+              withCredentials: true,
+              data: {where: {id: leads[j].main_contact_id}}
+            });
+
+            leads[j].contact = leads_contact.data[0];
           }
           
 

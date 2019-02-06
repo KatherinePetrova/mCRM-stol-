@@ -61,34 +61,35 @@
 							<span class="name">{{item.name}}</span>
 						</div>
 						<div class="child">
-							<input class="text" type="text" :value="item.value" style="font-size: 1.11rem">
+							<input class="text" type="text" :value="item.value" style="font-size: 1.11rem" placeholder="Не указано">
 						</div>
 					</div>
 					<div class="child" style="border-bottom: 1px solid #62757d; margin: 15px 0" v-if="selected_vklad==0"></div>
 					<div class="contact" v-if="selected_vklad==0">
 						<div class="img"></div>
-						<input type="text" value="Нуруллаев Мансур">
+						<input type="text" :value="loh(lead.main_contact.name)">
 						<button class="dots">
 							<div class="dot"></div>
 							<div class="dot"></div>
 							<div class="dot"></div>
 						</button>
 					</div>
-					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
+					<div class="input" v-for="item in lead.main_contact.stroks" v-if="selected_vklad==0 && lead.main_contact.clicked">
 						<div class="child">
 							<span class="name">{{item.name}}</span>
 						</div>
 						<div class="child">
 							<input class="text" type="text" :value="item.value" >
 						</div>
-					</div>
-					<div class="input" v-for="item in vklads[selected_vklad].stroks" v-if="selected_vklad==0">
-						<div class="child">
-							<span class="name">{{item.name}}</span>
-						</div>
-						<div class="child">
-							<input class="text" type="text" :value="item.value">
-						</div>
+					</div> 
+					<div class="contact" v-if="selected_vklad==0" v-for="item in lead.add_contacts">
+						<div class="img"></div>
+						<input type="text" :value="loh(item.name)">
+						<button class="dots">
+							<div class="dot"></div>
+							<div class="dot"></div>
+							<div class="dot"></div>
+						</button>
 					</div>
 				</div>
 
@@ -112,17 +113,12 @@
 <script type="text/javascript">
 import axios from "axios";
   export default{
-	props: ['ready', 'lead', 'tags', 'nony', 'select_task', 'vklads'],
+	props: ['lead', 'tags', 'select_task', 'vklads', 'ready', 'selected_vklad'],
 	components: {},
-	data(){
-		return {
-			selected_vklad: 0
-		}
-	},
-	method: {
+	methods: {
 		loh(data){
-			if(data=='loh_company'){
-				return 'Неизвестная компания'
+			if(data=='loh_contact'){
+				return 'Неизвестный контакт'
 			} else {
 				return data
 			}
@@ -365,9 +361,11 @@ input[type=number]::-webkit-outer-spin-button {
 		}
 		.right_ponel>.about>.body>.input>.child>.text{
 			border: none;
+			outline: none;
 			background-color: transparent;
 		}
 		.right_ponel>.about>.body>.input>.child>.text:focus{
+			margin-top: -1px;
 			border-bottom: 1px solid #4c8bf7;
 		}
 		.right_ponel>.about>.body>.input>.child>.doesn_t{

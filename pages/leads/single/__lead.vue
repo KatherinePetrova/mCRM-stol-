@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
       <lpanel :chose="1"></lpanel>
-    	<lead :lead="lead" :tags="tags" :vklads="vklads" :select_task="select_task" :ready="ready" :nony="nony"></lead>
+    	<lead :lead="lead" :tags="tags" :vklads="vklads" :select_task="select_task" :ready="ready" :selected_vklad="0"></lead>
    </div>
 </template>
 
@@ -58,7 +58,7 @@ export default {
         for(var i=0; i<vklads.length; i++){
           var strok = await axios('http://crm.aziaimport.kz:3000/api/where/custom_fields/0', {
             method: 'post',
-            data: {where: {group_id: vklads[i].id}},
+            data: {where: {group_id: vklads[i].id, lcc_id: 1}},
             withCredentials: true
           });
           vklads[i].stroks = strok.data;
@@ -95,16 +95,89 @@ export default {
 
         lead.pipeline = pipeline.data[0];
 
-        console.log(lead);
+        var main_contact = await axios('http://crm.aziaimport.kz:3000/api/where/contacts/0', {
+          method: 'post',
+          data: {where: {id: lead.main_contact_id}},
+          withCredentials: true
+        });
 
+        lead.main_contact = main_contact.data[0];
+        lead.main_contact.clicked = true;
+
+        var add_contacts = await axios('http://crm.aziaimport.kz:3000/api/where/leads_contacts/0', {
+          method: 'post',
+          data: {where: {leads_id: lead.main_contact_id}},
+          withCredentials: true
+        });
+
+        add_contacts = add_contacts.data;
+        lead.add_contacts = [];
+        
+        for(var i=0; i<add_contacts.length; i++){
+          if(add_contacts[i].contact_id!=lead.main_contact.id){
+            var add_single = await axios('http://crm.aziaimport.kz:3000/api/where/contacts/0', {
+              method: 'post',
+              data: {where: {id: add_contacts[i].contact_id}},
+              withCredentials: true
+            });
+            add_single.data[0].clicked = false;
+            lead.add_contacts.push(add_single.data[0]);            
+          }
+        }
+
+        var cStroks = await axios('http://crm.aziaimport.kz:3000/api/where/custom_fields/0', {
+          method: 'post',
+          data: {where: {lcc_id: 2}},
+          withCredentials: true
+        });
+        
+        lead.main_contact.stroks = cStroks.data;
+        for(var i=0; i<lead.add_contacts.length; i++){
+          lead.add_contacts[i].stroks = cStroks;
+        }
+
+        for(var i=0; i<lead.main_contact.stroks.length; i++){
+          var mainCStroks = await axios('http://crm.aziaimport.kz:3000/api/where/contacts_value/0', {
+            method: 'post',
+            data: {where: {field_id: lead.main_contact.stroks[i].id, contact_id: lead.main_contact.id}},
+            withCredentials: true
+          });
+
+          if(mainCStroks.data.length!=0){
+            lead.main_contact.stroks[i].value = mainCStroks.data[0].value
+          } else {
+            lead.main_contact.stroks[i].value = "";
+          }
+        }
+
+        for(var i=0; i<lead.add_contacts.length; i++){
+          for(var j=0; j<lead.add_contacts[i].stroks.length; j++){
+            var mainCStroks = await axios('http://crm.aziaimport.kz:3000/api/where/contacts_value/0', {
+              method: 'post',
+              data: {where: {field_id: lead.add_contacts[i].stroks[j].id, contact_id: lead.add_contacts[i].id}},
+              withCredentials: true
+            });
+
+            if(mainCStroks.data.length!=0){
+              lead.add_contacts[i].stroks[j].value = mainCStroks.data[0].value;
+            } else {
+              lead.add_contacts[i].stroks[j].value = "";
+            }
+          }
+        }
+                
+        console.log(lead);
+        var ready = true;
         return {
-          ready: true,
-          lead, tags, vklads,
-          nony: false,
+          ready, lead, tags, vklads,
           select_task: ''
         }
       } catch(e){
         console.log(e)
+        var ready = false;
+        return {
+          ready
+        }
       }
     },
     mounted(){     
