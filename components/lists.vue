@@ -168,6 +168,7 @@ export default {
   left: 70px;
 
   border-width: 20px;
+  background-color: white;
 }
 
 .loading>div {
