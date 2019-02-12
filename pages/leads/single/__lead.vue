@@ -95,13 +95,19 @@ export default {
 
         lead.pipeline = pipeline.data[0];
 
-        var main_contact = await axios('http://crm.aziaimport.kz:3000/api/where/contacts/0', {
-          method: 'post',
-          data: {where: {id: lead.main_contact_id}},
-          withCredentials: true
-        });
+        if(lead.main_contact_id){
+          var main_contact = await axios('http://crm.aziaimport.kz:3000/api/where/contacts/0', {
+            method: 'post',
+            data: {where: {id: lead.main_contact_id}},
+            withCredentials: true
+          });
 
-        lead.main_contact = main_contact.data[0];
+          lead.main_contact = main_contact.data[0];
+          
+        } else {
+          lead.main_contact = {}
+        }
+
         lead.main_contact.clicked = true;
 
         var add_contacts = await axios('http://crm.aziaimport.kz:3000/api/where/leads_contacts/0', {
