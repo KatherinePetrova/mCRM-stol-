@@ -54,7 +54,7 @@
 					<Draggable class="task" v-for="(lead, key) in item.leads" :key="key" style="min-height: 5rem; cursor: move">
 						<div class="head">
 							<div class="names">
-								<span class="name__first">{{loh(lead.contact.name)}}</span>
+								<span class="name__first">{{loh(lead.contact ? lead.contact.name : 'Неизвестно')}}</span>
 								<span class="name__second" :title="lead.company.name" style="text-overflow: ellipsis">, {{loh(lead.company.name)}}</span>
 							</div>
 							<span class="date">{{date(lead.created_at)}}</span>
@@ -75,7 +75,7 @@
 	components: { Container, Draggable },
 	props: ['id', 'pipeline', 'groups'],
 	mounted(){
-		
+		console.log(this.groups)		
 	},
   	methods: {
 		loh(data){
