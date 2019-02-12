@@ -67,14 +67,14 @@
 					<div class="child" style="border-bottom: 1px solid #62757d; margin: 15px 0" v-if="selected_vklad==0"></div>
 					<div class="contact" v-if="selected_vklad==0">
 						<div class="img"></div>
-						<input type="text" :value="loh(lead.main_contact.name)">
+						<input type="text" :value="loh(lead.main_contact.name ? lead.main_contact.name:'Неизвестный контакт')">
 						<button class="dots">
 							<div class="dot"></div>
 							<div class="dot"></div>
 							<div class="dot"></div>
 						</button>
 					</div>
-					<div class="input" v-for="item in lead.main_contact.stroks" v-if="selected_vklad==0 && lead.main_contact.clicked">
+					<div class="input" v-for="item in lead.main_contact.stroks" v-if="selected_vklad==0 && lead.main_contact.clicked && lead.main_contact">
 						<div class="child">
 							<span class="name">{{item.name}}</span>
 						</div>
@@ -241,7 +241,7 @@ input[type=number]::-webkit-outer-spin-button {
 		.right_ponel>.about>.head{
 			display: flex;
 			padding: 1em 1.5em 0;
-			min-height: 11em;
+			min-height: 13rem;
 			flex-direction: column;
 			background-color: #203d49;
 			position: relative;

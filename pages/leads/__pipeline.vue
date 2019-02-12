@@ -65,6 +65,7 @@ export default {
           if(!groups[i].leads[0]) groups[i].leads = [];
         }
 
+        console.log(groups)
         return {
           pipeline,
           groups,
