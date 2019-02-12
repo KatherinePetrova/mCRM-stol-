@@ -1,9 +1,7 @@
 <template>
 	<div class="mainy">
-      	<lpanel :chose="5"></lpanel>
-        <!-- <signIn></signIn>
- -->        <signUp></signUp>
-
+      <lpanel :chose="5"></lpanel>
+      <dev></dev>
    </div>
 </template>
 
@@ -11,13 +9,15 @@
 import lpanel from '~/components/lpanel.vue';
 import signIn from '~/components/sign_in.vue';
 import signUp from '~/components/sign_up.vue';
+import dev from '~/components/developing.vue';
 
 export default {
     
     components: {
       lpanel,
-      signIn,
-      signUp,
+      // signIn,
+      // signUp,
+      dev
     },
 
     mounted(){     

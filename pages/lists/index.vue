@@ -49,6 +49,7 @@ html, body {
   left: 70px;
 
   border-width: 20px;
+  background-color: #e5e5e5;
 }
 
 .loading>div {

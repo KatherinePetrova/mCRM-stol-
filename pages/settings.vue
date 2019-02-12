@@ -1,12 +1,12 @@
 <template>
 	<div class="mainy">
-      	<lpanel :chose="6"></lpanel>
+      <lpanel :chose="6"></lpanel>
     	<desktop></desktop>
    </div>
 </template>
 
 <script>
-import desktop from '~/components/icons/deskS.vue';
+import desktop from '~/components/developing.vue';
 import lpanel from '~/components/lpanel.vue';
 
 export default {

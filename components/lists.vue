@@ -91,9 +91,9 @@
 			</table>
 		</div>
 	</div>
-	<div class="loading" v-else>
+	<!-- <div class="loading" v-else>
         <div></div>
-      </div>
+    </div> -->
 </template>
 
 <script>
@@ -168,6 +168,8 @@ export default {
   left: 70px;
 
   border-width: 20px;
+
+  background-color: #e5e5e5;
 }
 
 .loading>div {

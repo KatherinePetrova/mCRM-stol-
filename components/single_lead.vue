@@ -241,7 +241,7 @@ input[type=number]::-webkit-outer-spin-button {
 		.right_ponel>.about>.head{
 			display: flex;
 			padding: 1em 1.5em 0;
-			min-height: 11em;
+			min-height: 13rem;
 			flex-direction: column;
 			background-color: #203d49;
 			position: relative;
